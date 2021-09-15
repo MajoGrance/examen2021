@@ -1,0 +1,18 @@
+<div class="text-left w-100">
+    <div class="label mb-1 pl-1">{{ label }}&nbsp;<span *ngIf="control?.errors?.required" style="color: red;">*</span></div>
+    <span class="w-100"
+        [class.pb-0]="control.invalid && control.touched" [class.pb-1]="noPadding"
+        [class.p-input-icon-right]="rightIcon">
+        <span class="p-inputgroup-addon right-addon" *ngIf="leftIcon"><mat-icon class="left-icon">{{leftIcon}}</mat-icon></span>
+        <p-inputNumber (onBlur)="checkCero()" [(ngModel)]="model" mode="decimal" locale="es-AR" [showButtons]="true" [placeholder]="placeholder"
+            class="number-input" (onInput)="change($event.value)" [disabled]="readonly" *ngIf="!maxFractionDigits" (focusout)="control?.markAllAsTouched()"
+            [class.is-invalid]="control?.invalid && control?.touched" (click)="clearCero()"></p-inputNumber>
+        <p-inputNumber (onBlur)="checkCero()" [(ngModel)]="model" mode="decimal" locale="es-AR" [showButtons]="true" [placeholder]="placeholder"
+            class="number-input" (onInput)="change($event.value)" [disabled]="readonly" *ngIf="maxFractionDigits"
+            [minFractionDigits]="minFractionDigits" [maxFractionDigits]="maxFractionDigits" (focusout)="control?.markAllAsTouched()"
+            [class.is-invalid]="control?.invalid && control?.touched" (click)="clearCero()"></p-inputNumber>
+        <div class="invalid-feedback-space" *ngIf="(!control?.invalid || !control?.touched) && !noPadding"></div>
+        <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control.errors?.required">{{errors.required}}</div>
+        <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control.errors?.pattern">{{errors.pattern}}</div>
+    </span>
+</div>

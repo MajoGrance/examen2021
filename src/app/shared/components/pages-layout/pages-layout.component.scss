@@ -1,0 +1,138 @@
+.logo {
+    max-width: 10rem;
+}
+.username:hover {
+    cursor: pointer;
+    color: var(--blue-100);
+}
+.navbar {
+    background-color: var(--primary-color);
+    color: white;
+    height: 4rem;
+    z-index: 6;
+}
+.sidebar-toggle:hover, .brand-text:hover {
+    cursor: pointer;
+    color: var(--blue-100);
+}
+.sidebar-toggle-icon {
+    font-size: 2.5rem;
+}
+.brand-text {
+    border-left: 1px solid var(--surface-100);
+}
+.navbar-avatar {
+    color: white!important;
+    ::ng-deep .p-avatar {
+        background-color: var(--yellow-500);
+        cursor: pointer;
+    }
+    ::ng-deep .p-avatar:hover {
+        background-color: var(--yellow-400);
+    }
+}
+.sidebar {
+    overflow: hidden;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    height: calc(100vh - 4rem);
+    transition: .2s width ease-in;
+    z-index: 5;
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.26), 
+        rgba(0, 0, 0, 0.671)
+      ),url(../../../../assets/images/sidebar.svg);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+.menu-icon {
+    font-size: 2.1rem;
+    color: var(--surface-100);
+}
+.menu-item {
+    white-space: nowrap;
+    cursor: pointer;
+}
+.menu-item:hover {
+    background-color: var(--blue-700);
+}
+.icon-container {
+    padding: 0.5rem;
+}
+.active-item {
+    border-left: 4px solid var(--blue-200);
+    color: var(--blue-200);
+    font-weight: 500;
+    .menu-icon {
+        color: var(--blue-200);
+    }
+}
+.menu-items {
+    list-style-type: none;
+    overflow: hidden;
+    -webkit-transition: max-height 0.2s; 
+    -moz-transition: max-height 0.2s; 
+    -ms-transition: max-height 0.2s; 
+    -o-transition: max-height 0.2s; 
+    transition: max-height 0.2s;  
+}
+.item {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    height: 3rem;
+}
+.scrollable-content {
+    overflow-y: auto;
+}
+.scrollable-content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.scrollable-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+.scrollable-content::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+.scrollable-content::-webkit-scrollbar-track {
+    background: var(--surface-100);
+    border-radius: 4px;
+}
+.scrollable-content::-webkit-scrollbar-track:hover, 
+.scrollable-content::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+}
+.rotate-180 {
+    rotate: 180;
+}
+.expand-icon {
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    -ms-transition: -ms-transform .8s ease-in-out;
+    transition: transform .2s ease-in-out;  
+}
+.layout-content {
+    position: fixed;
+    top: 4rem;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    transition: .2s left ease-in;
+    background-color: var(--surface-100);
+}
+.fixed-progress {
+    z-index: 7!important;
+    ::ng-deep .p-progressbar-indeterminate .p-progressbar-value:after {
+        background-color: var(--yellow-500)!important;
+    }
+    ::ng-deep .p-progressbar-indeterminate .p-progressbar-value:before {
+        background-color: var(--yellow-500)!important;
+    }
+}

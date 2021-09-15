@@ -1,0 +1,53 @@
+.login-container {
+    background-image: url(../../../assets/images/login-back.svg);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    overflow: hidden;
+}
+.secundary-text {
+    font-weight: 300;
+    font-size: 1.2rem;
+}
+.form-container {
+    max-width: 40rem;
+}
+.input-group {
+    padding-bottom: 1.5rem;
+}
+.toggle-password-icon {
+    cursor: pointer;
+}
+.invalid-tag {
+    min-height: 3rem;
+}
+.bg-white {
+    background-color: white;
+}
+.form-header {
+    color: var(--text-color);
+}
+.logo {
+    max-width: 20rem;
+}
+.animated-left {
+    transform: translateX(-100%);
+    transition: transform 0.7s;
+}
+.animated-left-init {
+    transform: translateX(0);
+}
+.animated-right {
+    transform: translateX(100%);
+    transition: transform 0.7s;
+}
+.animated-right-init {
+    transform: translateX(0);
+}
+.padding-bottom {
+    height: 1.3rem;
+}
+.input-title {
+    color: var(--text-color);
+}

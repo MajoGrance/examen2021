@@ -1,0 +1,34 @@
+.invalid-noicon {
+    background-image: none!important;
+}
+.control-padding {
+    padding-bottom: 1.1rem!important;
+}
+.invalid-feedback {
+    font-size: 0.6rem!important;
+}
+.invalid-feedback-space {
+    min-height: 1.15rem!important;
+}
+.form-control {
+    height: 2.7rem!important;
+}
+.label {
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: left!important;
+}
+.form-control:disabled {
+    opacity: 1;
+}
+.addon-icon {
+    margin-top: -1.4rem;
+}
+.search-button {
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 3px!important;
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 3px!important;
+    min-width: 2.05rem;
+    max-width: 2.175rem;
+}

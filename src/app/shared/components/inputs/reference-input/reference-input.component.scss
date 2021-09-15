@@ -1,0 +1,94 @@
+.invalid-noicon {
+    background-image: none!important;
+}
+.control-padding {
+    padding-bottom: 1.1rem!important;
+}
+.invalid-feedback {
+    font-size: 0.6rem!important;
+}
+.invalid-feedback-space {
+    min-height: 1.15rem!important;
+}
+.form-control {
+    height: 2.7rem!important;
+}
+.label {
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: left!important;
+}
+.form-control:disabled {
+    opacity: 1;
+}
+.addon-icon {
+    margin-top: -1.4rem;
+}
+.search-button {
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 3px!important;
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 3px!important;
+    min-width: 2.05rem;
+    max-width: 2.175rem;
+}
+.check-icon {
+    color: var(--bs-green);
+    font-size: 2rem;
+}
+.cancel-icon {
+    color: var(--bs-red);
+    font-size: 2rem;
+}
+.no-data-img {
+    max-width: 10rem;
+}
+.mod-icon {
+    font-size: 2rem;
+}
+.table-row {
+    cursor: pointer;
+}
+@media screen and (max-width: 961px) {
+   :host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-thead > tr > th,
+   .p-datatable.p-datatable-responsive .p-datatable-tfoot > tr > td {
+        display: none !important;
+    }
+    :host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td {
+        text-align: left;
+        display: block;
+        width: 100%;
+        float: left;
+        clear: left;
+        border-right: 1px solid var(--surface-200)!important;
+        border-left: 1px solid var(--surface-200)!important;
+    }
+
+    :host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+        padding: .4rem;
+        min-width: 30%;
+        display: inline-block!important;
+        margin: -.4em 1em -.4em -.4rem;
+        font-weight: bold;
+    }
+    .actions-colum {
+        width: 100%;
+    }
+}
+.clear-filter {
+    cursor: pointer;
+}
+.actions-column {
+    width: 10rem;
+}
+.column-filter {
+    :host::ng-deep .p-dropdown-items-wrapper {
+        max-height: 30rem!important;
+    }
+    ::ng-deep .p-component{
+        font-size: 0.7rem!important;
+    }
+}
+:host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+}

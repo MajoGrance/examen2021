@@ -1,0 +1,22 @@
+@use '~@angular/material' as mat;
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@include mat.core();
+.overflow-visible {
+    overflow: visible!important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.card-title {
+    background-color: var(--blue-700);
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    padding-left: 1.5rem;
+    border-radius: 4px;
+    padding-right: 1.5rem;
+    white-space: nowrap;
+    width: min-content;
+    color: white;
+    margin-bottom: 1rem;
+    margin-top: -2.5rem;
+    margin-left: 1rem;
+}

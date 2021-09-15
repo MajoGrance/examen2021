@@ -1,0 +1,44 @@
+// @import '../../../../../theme.scss';
+.left-icon {
+    // color: $secundary-color-100;
+}
+.form-control-icon-left {
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+}
+.control-padding {
+    padding-bottom: 20px!important;
+}
+.invalid-feedback {
+    font-size: 0.6rem!important;
+}
+.select-input {
+    ::ng-deep .p-cascadeselect{
+        height: 2.7rem!important;
+    }
+    ::ng-deep .p-cascadeselect .p-cascadeselect-label {
+        padding-top: 0.5rem;
+    }
+    ::ng-deep .p-cascadeselect-items-wrapper {
+        z-index: 4;
+    }
+    ::ng-deep .p-cascadeselect-panel.p-cascadeselect-items {
+        min-height: 0;
+        max-height: 10rem;
+        overflow: auto;
+    }
+}
+.select-input-disabled {
+    ::ng-deep .p-cascadeselect {
+        background: var(--bs-gray-200);
+        opacity: 1;
+    }
+}
+.label {
+    font-size: 1rem;
+    // color: $dark-color-100;
+    font-weight: 400;
+}
+.invalid-feedback-space {
+    min-height: 1.15rem!important;
+}

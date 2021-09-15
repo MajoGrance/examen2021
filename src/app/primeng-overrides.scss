@@ -1,0 +1,32 @@
+:host {
+    ::ng-deep .p-speeddial-item {
+        a {
+            text-decoration: none;
+        }
+    }
+    ::ng-deep .p-sortable-column{
+        background: var(--surface-b)!important;
+        color: var(--text-color)!important;
+    }
+    ::ng-deep .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+        color: var(--surface-500);
+    }
+    ::ng-deep .p-datatable .p-sortable-column.p-highlight:hover {
+        .p-sortable-column-icon {
+            color: var(--text-color-secundary)
+        }
+    }
+    ::ng-deep .p-tabview-title {
+        font-weight: 400;
+    }
+    ::ng-deep .p-fieldset .p-fieldset-legend {
+        width: auto;
+        margin-top: -1.5rem;
+        margin-left: 1rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+    ::ng-deep .p-disabled {
+        opacity: 1;
+    }
+}

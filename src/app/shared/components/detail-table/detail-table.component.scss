@@ -1,0 +1,74 @@
+.table {
+    ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+        // background: $light-color-400!important;
+        font-size: 0.9rem;
+    }
+    ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+        font-size: 0.9rem;
+    }
+    ::ng-deep .p-datatable .p-datatable-header {
+        // background-color: $light-color-400;
+    }
+    ::ng-deep input {
+        width: 100%!important;
+        height: 2.2rem!important;
+    }
+    ::ng-deep.p-datatable-auto-layout>.p-datatable-wrapper {
+        overflow: visible!important;
+    }
+}
+.no-data-img {
+    width: 10rem;
+}
+.check-icon {
+    color: var(--bs-green);
+    font-size: 2rem;
+}
+.cancel-icon {
+    color: var(--bs-red);
+    font-size: 2rem;
+}
+.chip-list {
+    margin-bottom: 3rem!important;
+}
+// :host ::ng-deep {    
+//     .p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+//         display: none;
+//     }
+// }
+.clear-filter-icon {
+    cursor: pointer;
+}
+.column {
+    width: 100%!important;
+    overflow: visible;
+}
+:host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+}
+@media screen and (max-width: 961px) {
+    :host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-thead > tr > th,
+    .p-datatable.p-datatable-responsive .p-datatable-tfoot > tr > td {
+        display: none !important;
+    }
+    :host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td {
+        text-align: left;
+        display: block;
+        width: 100%;
+        float: left;
+        clear: left;
+        border-right: 1px solid var(--surface-200)!important;
+        border-left: 1px solid var(--surface-200)!important;
+    }
+
+    :host::ng-deep.p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+        padding: .4rem;
+        min-width: 30%;
+        display: inline-block!important;
+        margin: -.4em 1em -.4em -.4rem;
+        font-weight: bold;
+    }
+    .actions-colum {
+        width: 100%;
+    }
+}

@@ -1,0 +1,13 @@
+<div class="text-left w-100 mb-1">
+    <div class="label mb-1 pl-1" *ngIf="!noPadding">{{ label }}&nbsp;<span *ngIf="control?.errors?.required" style="color: red;">*</span></div>
+    <span class="w-100 overflow-visible">
+        <p-multiSelect [options]="options" styleClass="w-100" class="select-input w-100"
+            [class.is-invalid]="control?.invalid && control?.touched" [placeholder]="placeholder"
+            (onChange)="change($event.value);" emptyFilterMessage="No se encontraron datos" emptyMessage="No se encontraron datos"
+            optionLabel="nombre" optionValue="valor" (onBeforeHide)="markAllAsTouched()" [(ngModel)]="model"
+            optionDisabled="readonly" [disabled]="readonlySearch" [class.multiselect-disabled]="readonlySearch"
+            display="chip" [autofocusFilter]="true"></p-multiSelect>
+        <div class="invalid-feedback-space" *ngIf="(!control?.invalid || !control?.touched) && !noPadding"></div>
+        <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control.errors?.required">{{errors.required}}</div>
+    </span>
+</div>

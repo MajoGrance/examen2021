@@ -1,0 +1,99 @@
+<div class="row h-100 m-0 login-container">
+    <div class="col-lg-5 d-flex align-items-center justify-content-center" *ngIf="innerWidth > 960">
+        <div class="container p-7" [class.animated-left-init]="init && innerWidth > 960" [class.animated-left]="innerWidth > 960">
+            <h1 class="pb-2">
+                <h1>Centro Fisioterapéutico</h1>
+            </h1>
+            <span class="secundary-text">
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Administración de categorías de productos
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Administración de sub categorías de productos
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Administración de productos
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Administración de pacientes
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Gestión de horarios fijos y excepcionales
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Reserva de turnos
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Fichas clínicas
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Servicios realizados
+                </div>
+                <div class="d-flex align-items-center pb-2">
+                    <i class="material-icons pr-2">check</i>
+                    Reporte de servicios resumido y detallado
+                </div>
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-7 p-0" [class.animated-right-init]="init && innerWidth > 960" [class.animated-right]="innerWidth > 960">
+        <div class="d-flex align-items-center justify-content-center bg-white h-100"
+            [class.mr-2]="innerWidth <= 960" [class.ml-2]="innerWidth <= 960"
+            [class.mt-5]="innerWidth <= 960" [class.mb-5]="innerWidth <= 960">
+            <div class="container form-container p-3" [class.mr-2]="innerWidth <= 960" [class.ml-2]="innerWidth <= 960">
+                <h2 class="form-header">Inicio de sesión</h2>
+                <p-divider></p-divider>
+                <p-messages severity="warn">
+                    <ng-template pTemplate>
+                        <div class="p-ml-2">Inicie sesión ingresando su nombre de usuario y contraseña.</div>
+                    </ng-template>
+                </p-messages>
+                <form [formGroup]="formGroup" (ngSubmit)="login()">
+                    <div class="input-group">
+                        <h6 class="input-title">Usuario</h6>
+                        <span class="p-input-icon-left w-100">
+                            <i class="pi pi-user"></i>
+                            <input type="username" pInputText placeholder="Usuario" formControlName="usuario" class="form-control"
+                            autocomplete="on" [class.ng-dirty]="formGroup.controls.usuario.errors && formGroup.controls.usuario.touched"/>
+                        </span>
+                        <small class="p-error" *ngIf="formGroup.controls.usuario.errors && formGroup.controls.usuario.touched">
+                            Este campo es requerido</small>
+                    </div>
+                    <div class="padding-bottom" *ngIf="!formGroup.controls.usuario.errors || !formGroup.controls.usuario.touched">
+                    </div>
+                    <div class="input-group">
+                        <h6 class="input-title">Contraseña</h6>
+                        <span class="p-input-icon-left p-input-icon-right w-100">
+                            <i class="pi pi-key"></i>
+                            <input [type]="keyType" pInputText placeholder="Contraseña" formControlName="contrasenha" class="form-control"
+                            autocomplete="on" [class.ng-dirty]="formGroup.controls.contrasenha.errors && formGroup.controls.contrasenha.touched"/>
+                            <i class="pi pi-eye toggle-password-icon" *ngIf="keyType === 'text'" (click)="toggleKeyType()"></i>
+                            <i class="pi pi-eye-slash toggle-password-icon" *ngIf="keyType === 'password'" (click)="toggleKeyType()"></i>
+                        </span>
+                        <small class="p-error" *ngIf="formGroup.controls.contrasenha.errors && formGroup.controls.contrasenha.touched">
+                            Este campo es requerido</small>
+                    </div>
+                    <div class="padding-bottom" *ngIf="!(formGroup.controls.contrasenha.errors && formGroup.controls.contrasenha.touched)">
+                    </div>
+                    <div class="container w-100 text-center pb-2 invalid-tag">
+                        <p-tag [value]="loginError" icon="pi pi-times" severity="danger" *ngIf="loginError"></p-tag>
+                        <p-tag value="Credenciales verificadas, redireccionando..." icon="pi pi-spin pi-spinner" severity="success" *ngIf="logged"></p-tag>
+                    </div>
+                    <div class="container w-100 text-center">
+                        <button pButton class="p-button-rounded pr-7 pl-7" label="Iniciar sesión" type="submit"
+                            iconPos="right"
+                            [icon]="loading?'pi pi-spin pi-spinner':'pi pi-angle-double-right'" [disabled]="loading"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="p-0 text-left">
+    <div class="label mb-1 pl-1">{{ label }}&nbsp;<span *ngIf="control?.errors?.required" style="color: red;">*</span></div>
+    <p-multiSelect [options]="options" [(ngModel)]="model" [defaultLabel]="placeholder" [optionLabel]="optionLabel"
+         [class.is-invalid]="control.invalid && control.touched" [placeholder]="placeholder"
+        (onChange)="change($event.value)" [optionValue]="optionValue" class="multiselect-input"
+        emptyFilterMessage="No se encontraron datos" emptyMessage="No se encontraron datos"
+        styleClass="w-100" optionDisabled="readonly" [autofocusFilter]="true">
+        <ng-template let-item pTemplate="selectedItems">
+            <span *ngFor="let option of item">
+                <div class="d-inline-flex pr-1" *ngIf="option">
+                    <p-tag>{{getSelectedName(option)}}</p-tag>
+                </div>
+            </span>
+        </ng-template>
+    </p-multiSelect>
+    <div class="m-0 w-100" [class.control-padding]="!control.invalid || !control.touched" [class.pb-0]="control.invalid && control.touched">
+    </div>
+    <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control.errors?.required">{{errors.required}}</div>
+</div>

@@ -1,0 +1,5 @@
+.modal-detalle {
+    ::ng-deep .p-dialog-content {
+        overflow-y: visible;
+    }
+}

@@ -1,0 +1,26 @@
+<div class="mb-7 animate__animated animate__fadeIn">
+    <p-card class="window-card">
+        <div class="card-title shadow-5 d-flex align-items-center">
+            <i class="material-icons-outlined pr-2 mod-icon">{{getIcon()}}</i> {{title.toUpperCase()}}
+        </div>
+        <div class="buttons pb-2 pt-2" *ngIf="innerWidth >= 641">
+            <button pButton class="p-button-sm mr-1" label="Volver a la lista" icon="pi pi-angle-double-left"
+                (click)="goBack()"></button>
+            <button pButton class="p-button-sm p-button-success mr-1" label="Editar" icon="pi pi-pencil"
+                *ngIf="!editando" (click)="setEditando(true)" [disabled]="loading"></button>
+            <button pButton class="p-button-sm p-button-success mr-1" label="Guardar" icon="pi pi-save"
+                *ngIf="editando" (click)="save()" [disabled]="loading"></button>
+            <button pButton class="p-button-sm p-button-danger mr-1" label="Cancelar" icon="pi pi-times"
+                *ngIf="editando && !nuevo" (click)="cancelarEdicion()" [disabled]="loading"></button>
+            <button pButton class="p-button-sm p-button-warning mr-1" label="Eliminar" icon="pi pi-trash"
+                *ngIf="!nuevo" [disabled]="loading" (click)="delete()"></button>
+            <button pButton class="p-button-sm mr-1" label="Copiar" icon="pi pi-copy" *ngIf="!nuevo"
+                (click)="copy()" [disabled]="loading"></button>
+        </div>
+        <ng-content select="form"></ng-content>
+    </p-card>
+    <div style="position: fixed; bottom: 0.3rem;right: 0.3rem;" class="speeddial-circle" *ngIf="innerWidth < 641">
+        <p-speedDial [model]="phoneItems" [radius]="120" direction="up-left" type="quarter-circle"
+            showIcon="pi pi-ellipsis-v" hideIcon="pi pi-times"></p-speedDial>
+    </div>
+</div>

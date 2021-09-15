@@ -1,0 +1,18 @@
+<p-dialog header="Cambiar contraseña" [visible]="display" (visibleChange)="setDisplay($event)" [modal]="true" [style]="{width: '27rem'}"
+    [draggable]="false" [resizable]="false" class="modal-detalle" [focusTrap]="true">
+    <div class="row">
+        <div class="col-lg-12 pb-0 pt-0">
+            <app-key-input [control]="form.controls.viejaContrasenha" label="Contraseña anterior"></app-key-input>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 pb-0 pt-0">
+            <app-key-input [control]="form.controls.nuevaContrasenha" label="Contraseña nueva"></app-key-input>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="footer">
+            <p-button icon="pi pi-check" (click)="confirm()" label="Confirmar" styleClass="p-button-success"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>

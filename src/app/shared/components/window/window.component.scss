@@ -1,0 +1,114 @@
+.speeddial-circle-demo {
+    .p-speeddial-circle {
+        top: calc(50% - 2rem);
+        left: calc(50% - 2rem);
+    }
+
+    .p-speeddial-semi-circle {
+        &.p-speeddial-direction-up {
+            left: calc(50% - 2rem);
+            bottom: 0;
+        }
+
+        &.p-speeddial-direction-down {
+            left: calc(50% - 2rem);
+            top: 0;
+        }
+
+        &.p-speeddial-direction-left {
+            right: 0;
+            top: calc(50% - 2rem);
+        }
+
+        &.p-speeddial-direction-right {
+            left: 0;
+            top: calc(50% - 2rem);
+        }
+    }
+
+    .p-speeddial-quarter-circle {
+        &.p-speeddial-direction-up-left {
+            right: 0;
+            bottom: 0;
+        }
+
+        &.p-speeddial-direction-up-right {
+            left: 0;
+            bottom: 0;
+        }
+
+        &.p-speeddial-direction-down-left {
+            right: 0;
+            top: 0;
+        }
+
+        &.p-speeddial-direction-down-right {
+            left: 0;
+            top: 0;
+        }
+    }
+}
+.window-card {
+    ::ng-deep .p-card {
+        margin-top: 1.8rem;
+    }
+    ::ng-deep .p-card .p-card-body {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+.mod-icon {
+    font-size: 2rem;
+}
+:host ::ng-deep {
+    .speeddial-circle {
+        .p-speeddial-circle {
+            top: calc(50% - 2rem);
+            left: calc(50% - 2rem);
+        }
+
+        .p-speeddial-semi-circle {
+            &.p-speeddial-direction-up {
+                left: calc(50% - 2rem);
+                bottom: 0;
+            }
+
+            &.p-speeddial-direction-down {
+                left: calc(50% - 2rem);
+                top: 0;
+            }
+
+            &.p-speeddial-direction-left {
+                right: 0;
+                top: calc(50% - 2rem);
+            }
+
+            &.p-speeddial-direction-right {
+                left: 0;
+                top: calc(50% - 2rem);
+            }
+        }
+
+        .p-speeddial-quarter-circle {
+            &.p-speeddial-direction-up-left {
+                right: 0;
+                bottom: 0;
+            }
+
+            &.p-speeddial-direction-up-right {
+                left: 0;
+                bottom: 0;
+            }
+
+            &.p-speeddial-direction-down-left {
+                right: 0;
+                top: 0;
+            }
+
+            &.p-speeddial-direction-down-right {
+                left: 0;
+                top: 0;
+            }
+        }
+    }
+}

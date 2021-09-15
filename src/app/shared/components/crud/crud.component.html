@@ -1,0 +1,118 @@
+<div class="mb-7 animate__animated animate__fadeIn">
+    <p-card class="crud-card">
+        <div class="card-title shadow-5 d-flex align-items-center">
+            <i class="material-icons-outlined pr-2 mod-icon">{{getIcon()}}</i> {{title.toUpperCase()}}
+        </div>
+        <p-table #dt [value]="source" [rows]="10" [paginator]="true" [columns]="columns"
+            [(selection)]="selected" [responsive]="true" sortMode="multiple" filterMode="menu"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+            [stateKey]="title"
+            [showCurrentPageReport]="true" [autoLayout]="true" class="table">
+            <ng-template pTemplate="caption">
+                <div class="row">
+                    <div class="col-md-6 text-left pb-2" *ngIf="innerWidth > 641">
+                        <span>
+                            <button pButton icon="pi pi-plus" label="Nuevo" class="p-button-sm p-button-success mr-1"
+                                (click)="onNew()"></button>
+                            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-sm p-button-warning mr-1"
+                                (click)="deleteSelected()"></button>
+                            <button #exportButton pButton icon="pi pi-download" label="Exportar" class="p-button-sm"
+                                (click)="menu.toggle($event)"></button>
+                            <p-menu #menu [popup]="true" [model]="exportarItems" appendTo="body"></p-menu>
+                        </span>
+                    </div>
+                    <div class="col-md-6 text-right pb-2">
+                        <span class="p-input-icon-left w-100" [class.p-input-icon-right]="searchInput.value">
+                            <i class="pi pi-search"></i>
+                            <input #searchInput pInputText type="text" [(ngModel)]="filterValue"
+                                (input)="dt.filterGlobal(getValue($event.target), 'contains')" 
+                                placeholder="Buscar {{title}}..." class="w-100"/>
+                            <i class="pi pi-times clear-filter" *ngIf="searchInput.value"
+                                (click)="clearSearchInput(dt)"></i>
+                        </span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                        {{col.header}}<p-sortIcon [field]="col.field" pTooltip="CTRL + CLICK"></p-sortIcon>
+                        <p-columnFilter [type]="col.filterType" [field]="col.field" display="menu" [showOperator]="false"></p-columnFilter>
+                    </th>
+                    <th class="actions-column text-center">Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Seleccionar</span>
+                            <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                        </span>
+                    </td>
+                    <td *ngFor="let col of columns">
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">{{col.header}}</span>
+                            <span *ngIf="col.type ==='text' || col.type === 'id'">
+                                <span *ngIf="col.refField && col.refName">{{row[col.refName]?row[col.refName][col.refField]:''}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row[col.field]}}</span>
+                            </span>
+                            <span *ngIf="col.type ==='option'">
+                                <span class="option" *ngIf="col.refField && col.refName">
+                                    {{col.labels?col.labels[row[col.refName]?row[col.refName][col.refField]:'']:''}}</span>
+                                <span class="option" *ngIf="!col.refField || !col.refName">
+                                    {{col.labels?col.labels[row[col.field]]:''}}</span>
+                            </span>
+                            <span *ngIf="col.type ==='numeric'">
+                                <span *ngIf="col.refField && col.refName">{{row[col.refName]?row[col.refName][col.refField]:''| currency: '': '': '0.0-6': 'es-AR'}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row[col.field] | currency: '': '': '0.0-6': 'es-AR' }}</span>
+                            </span>
+                            <span *ngIf="col.type ==='boolean'" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                                <span *ngIf="row[col.field] === true">
+                                    <mat-icon class="material-icons-outlined check-icon">check_circle</mat-icon>
+                                </span>
+                                <span *ngIf="row[col.field] !== true">
+                                    <mat-icon class="material-icons-outlined cancel-icon">cancel</mat-icon>
+                                </span>
+                            </span>
+                            <span *ngIf="col.type ==='list'" class="text-right" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                                <div class="mr-1 mb-1" style="display: inline-flex;" *ngFor="let permiso of row[col.field]">
+                                    <p-tag [value]="permiso"></p-tag>
+                                </div>
+                            </span>
+                            <span *ngIf="col.type ==='date'">
+                                <span *ngIf="col.refField && col.refName">{{row[col.refName]?row[col.refName][col.refField]:'' | date: 'dd/MM/yyyy'}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row[col.field] | date: 'dd/MM/yyyy'}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center actions-column">
+                        <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success mr-2"
+                            (click)="onEdit(row)" pTooltip="Ver"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                            pTooltip="Eliminar" (click)="delete(row)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td [attr.colspan]="columns.length + 2" class="text-center">
+                        <div class="container">
+                            <br>
+                            <img class="no-data-img mt-3 mb-3" src="./assets/images/empty-box.svg"><br>
+                            No se encontraron datos.<br><br>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
+    <div style="position: fixed; bottom: 0.3rem;right: 0.3rem;" class="speeddial-circle" *ngIf="innerWidth < 641">
+        <p-speedDial [model]="phoneItems" [radius]="120" direction="up-left" type="quarter-circle"
+            showIcon="pi pi-ellipsis-v" hideIcon="pi pi-times"></p-speedDial>
+    </div>
+</div>

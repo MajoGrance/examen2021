@@ -1,0 +1,8 @@
+
+<div class="p-field-checkbox d-flex align-items-center text-left pl-1 w-100">
+    <p-checkbox name="group1" [(ngModel)]="model" [binary]="true" (onChange)="change($event.checked)" [disabled]="readonly"></p-checkbox>
+    <label class="checkbox-label">{{label}}</label>
+    <label *ngIf="htmlLabel" class="checkbox-label">
+        <div [innerHTML]="htmlLabel"></div>
+    </label>
+</div>

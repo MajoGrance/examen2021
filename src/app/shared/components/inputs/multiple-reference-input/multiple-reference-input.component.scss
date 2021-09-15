@@ -1,0 +1,37 @@
+// @import '../../../../../theme.scss';
+.left-icon {
+    // color: $secundary-color-100;
+}
+.form-control-icon-left {
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+}
+.control-padding {
+    padding-bottom: 20px!important;
+}
+.invalid-feedback {
+    font-size: 0.6rem!important;
+}
+.multiselect-input {
+    ::ng-deep .p-multiselect {
+        // background: $light-color-400!important;
+        height: 2.2rem!important;
+    }
+    ::ng-deep .p-multiselect .p-multiselect-label {
+        padding-top: 0.2rem;
+    }
+    ::ng-deep .p-multiselect-items-wrapper {
+        z-index: 4;
+    }
+    ::ng-deep .p-multiselect-token {
+        font-size: 0.8rem!important;
+    }
+}
+.form-control {
+    height: 2.2rem!important;
+}
+.label {
+    font-size: 1rem;
+    // color: $dark-color-100;
+    font-weight: 400;
+}

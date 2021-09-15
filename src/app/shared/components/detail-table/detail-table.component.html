@@ -1,0 +1,173 @@
+<p-table #dt [value]="source" [rows]="rows" [columns]="columns" [paginator]="true"
+    [(selection)]="selectedRows" [responsive]="true" [autoLayout]="true" 
+    editMode="row" styleClass="p-datatable-sm p-datatable-responsive" class="table">
+    <ng-template pTemplate="caption" let-columns>
+        <div class="p-d-flex p-ai-center p-jc-between">
+            {{title}}
+            <span *ngIf="!readonly">
+                <p-button icon="pi pi-plus" [label]="windowSize>641?'Agregar':''" class="mr-1"
+                    (click)="onNew()"></p-button>
+                <p-button icon="pi pi-trash" [label]="windowSize>641?'Eliminar':''" styleClass="p-button-danger"
+                    (click)="onDelete(dt)"></p-button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th style="width: 3rem" *ngIf="!readonly">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let col of showColumns">
+                {{col.header}}
+            </th>
+            <th class="text-center" *ngIf="!readonly">
+                Acciones
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row let-editing="editing" let-ri="rowIndex" *ngIf="inline" >
+        <tr [pEditableRow]="row">
+            <td *ngIf="!readonly">
+                <span class="d-flex p-jc-between">
+                    <span class="p-column-title">Seleccionar</span>
+                    <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                </span>
+            </td>
+            <td *ngFor="let col of columns" (click)="onClickRow(row)" pEditableColumn class="pl-1 pt-1 pb-0">
+                <span class="d-flex p-jc-between column">
+                    <span class="p-column-title">{{col.header}}</span>
+                    <span *ngIf="col.type ==='text'" class="w-100">
+                        <p-cellEditor class="w-100">
+                            <ng-template pTemplate="input">
+                                <app-text-input [control]="row.controls[col.field]" [noPadding]="true" placeholder=""
+                                    [readonly]="readonly"></app-text-input>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="col.refField && col.refName">{{row.value[col.refName][col.refField]}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row.value[col.field]}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </span>
+                    <span *ngIf="col.type ==='numeric'" class="w-100">
+                        <p-cellEditor class="w-100">
+                            <ng-template pTemplate="input">
+                                <app-number-input [control]="row.controls[col.field]" [noPadding]="true"  [readonly]="readonly"
+                                    [maxFractionDigits]="0" (focusout)="onBlur(row, col.field)"></app-number-input>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="col.refField && col.refName">{{row.value[col.refName][col.refField] | currency: '': '': '0.0-6': 'es-AR'}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row.value[col.field] | currency: '': '': '0.0-6': 'es-AR' }}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </span>
+                    <span *ngIf="col.type ==='boolean'" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                        <p-cellEditor class="w-100">
+                            <ng-template pTemplate="input">
+                                <app-boolean-input [control]="row.controls[col.field]" [readonly]="readonly"></app-boolean-input>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="row.value[col.field] === true">
+                                    <mat-icon class="material-icons-outlined check-icon">check_circle</mat-icon>
+                                </span>
+                                <span *ngIf="row.value[col.field] !== true">
+                                    <mat-icon class="material-icons-outlined cancel-icon">cancel</mat-icon>
+                                </span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </span>
+                    <span *ngIf="col.type ==='option'" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                        <p-cellEditor class="w-100">
+                            <ng-template pTemplate="input">
+                                <app-select-input [control]="row.controls[col.field]" [options]="asOptions(col.labels)"
+                                    [noPadding]="true"></app-select-input>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span class="option" *ngIf="col.refField && col.refName">
+                                    {{col.labels?col.labels[row.value[col.refName][col.refField]]:''}}</span>
+                                <span class="option" *ngIf="!col.refField || !col.refName">
+                                    {{col.labels?col.labels[row.value[col.field]]:''}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </span>
+                    <span *ngIf="col.type ==='list'" class="text-right" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                        <div class="mr-1 mb-1" style="display: inline-flex;" *ngFor="let permiso of row[col.field]">
+                            <p-tag [value]="permiso"></p-tag>
+                        </div>
+                    </span>
+                </span>
+            </td>
+            <td class="text-center actions-column" *ngIf="!readonly">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                    title="Editar" *ngIf="!editing" (click)="onRowEditInit(row, ri)" pInitEditableRow></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success mr-2"
+                    title="Confirmar" *ngIf="editing" (click)="onRowEditSave(row, ri)" pSaveEditableRow></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger mr-2"
+                    title="Cancelar" *ngIf="editing" (click)="onRowEditCancel(row, ri)" pCancelEditableRow></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                    title="Eliminar"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row *ngIf="!inline">
+        <tr>
+            <td *ngIf="!readonly">
+                <span class="d-flex justify-content-between w-100">
+                    <span class="p-column-title">Seleccionar</span>
+                    <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                </span>
+            </td>
+            <td *ngFor="let col of columns">
+                <span class="d-flex justify-content-between w-100">
+                    <span class="p-column-title">{{col.header}}</span>
+                    <span *ngIf="col.type ==='text' || col.type === 'id'">
+                        <span *ngIf="col.refField && col.refName">{{row.value[col.refName][col.refField]}}</span>
+                        <span *ngIf="!col.refField || !col.refName">{{row.value[col.field]}}</span>
+                    </span>
+                    <span *ngIf="col.type ==='option'">
+                        <span class="option" *ngIf="col.refField && col.refName">
+                            {{col.labels?col.labels[row.value[col.refName][col.refField]]:''}}</span>
+                        <span class="option" *ngIf="!col.refField || !col.refName">
+                            {{col.labels?col.labels[row.value[col.field]]:''}}</span>
+                    </span>
+                    <span *ngIf="col.type ==='numeric'">
+                        <span *ngIf="col.refField && col.refName">{{row.value[col.refName][col.refField] | currency: '': '': '0.0-6': 'es-AR'}}</span>
+                        <span *ngIf="!col.refField || !col.refName">{{row.value[col.field] | currency: '': '': '0.0-6': 'es-AR' }}</span>
+                    </span>
+                    <span *ngIf="col.type ==='boolean'" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                        <span *ngIf="row.value[col.field] === true">
+                            <mat-icon class="material-icons-outlined check-icon">check_circle</mat-icon>
+                        </span>
+                        <span *ngIf="row.value[col.field] !== true">
+                            <mat-icon class="material-icons-outlined cancel-icon">cancel</mat-icon>
+                        </span>
+                    </span>
+                    <span *ngIf="col.type ==='list'" class="text-right" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                        <div class="mr-1 mb-1" style="display: inline-flex;" *ngFor="let permiso of row.value[col.field]">
+                            <p-tag [value]="permiso"></p-tag>
+                        </div>
+                    </span>
+                    <span *ngIf="col.type ==='date'">
+                        <span *ngIf="col.refField && col.refName">{{row.value[col.refName][col.refField] | date: 'dd/MM/yyyy'}}</span>
+                        <span *ngIf="!col.refField || !col.refName">{{row.value[col.field] | date: 'dd/MM/yyyy'}}</span>
+                    </span>
+                </span>
+            </td>
+            <td class="text-center actions-column" *ngIf="!readonly">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                    title="Editar" (click)="onEdit(row)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                    title="Eliminar" (click)="onDeleteRow(row)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td [attr.colspan]="columns.length + (readonly?0:2)" class=text-center>
+                <div class="container">
+                    <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                    No se encontraron datos.
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

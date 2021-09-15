@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg shadow-2 pr-2 pl-2 d-flex justify-content-between align-items-center">
+    <div class="d-inline-flex brand-container">
+        <div class="sidebar-toggle d-flex align-items-center pr-2" (click)="toggleSidebar()">
+            <i class="material-icons-outlined sidebar-toggle-icon" *ngIf="!showMenu">menu</i>
+            <i class="material-icons-outlined sidebar-toggle-icon" *ngIf="showMenu">menu_open</i>
+        </div>
+        <div class="brand-text d-flex align-items-center pl-2" (click)="goHome()">
+            <img class="logo" src="./assets/images/logo_blanco.png">
+        </div>
+    </div>
+    <div #div class="d-flex align-items-center username" (click)="menu.toggle($event)">
+        <span class="mr-2" *ngIf="innerWidth > 641">{{nombreUsuario}}</span>
+        <p-avatar class="navbar-avatar" shape="circle" size="large">{{iniciales}}</p-avatar>
+        <p-menu styleClass="mt-3" #menu [popup]="true" [model]="userMenu" appendTo="body"></p-menu>
+    </div>
+</nav>
+<p-progressBar *ngIf="loading" class="fixed-progress" mode="indeterminate" [style]="{'height': '5px', 'z-index': 7}"></p-progressBar>
+<div class="sidebar shadow-2 scrollable-content" [style.width.rem]="sidebarWidth">
+    <div class="mt-2">
+        <span *ngFor="let item of menuItems">
+            <div class="d-flex align-items-center menu-item"
+                [class.active-item]="isActive(item.link)" [class.pl-1]="!isActive(item.link)"
+                (click)="toggleMenuItem(item)">
+                <div class="icon-container d-inline-flex mr-2">
+                    <i class="material-icons-outlined menu-icon">{{item.icon}}</i>
+                </div>
+                <div class="d-inline-flex justify-content-between w-100 pr-2">
+                    {{item.label}}
+                    <i class="material-icons-outlined expand-icon" *ngIf="item.children"
+                        [class.rotate-180]="!item.expanded">keyboard_arrow_down</i>
+                </div>
+            </div>
+            <ul class="menu-items ml-5 mb-0" [style.max-height.rem]="item.expanded?4*(item.children?item.children.length:0):0"
+                *ngIf="showMenu">
+                <li *ngFor="let item of item.children" class="border-bottom-light item pt-0 pb-0">
+                    <div class="row menu-item pt-0 pb-0 w-100 h-100 d-inline-flex align-items-center" [class.active-item]="isActive(item.link)"
+                        (click)="navigate(item.link);closeMenu()">
+                        <mat-icon class="menu-icon-sub material-icons-outlined pr-5 pl-0">{{item.icon}}</mat-icon>
+                        {{item.label}}
+                    </div>
+                </li>
+            </ul>
+        </span>
+    </div>
+</div>
+<div class="layout-content" [style.left.rem]="innerWidth > 641?innerWidth > 961?sidebarWidth:closedSidebarWidth:0" (click)="closeMenu()">
+    <div class="pt-2 pb-2 pr-2 pl-2">
+        <ng-content select="router-outlet"></ng-content>
+    </div>
+</div>
+<app-cambiar-contrasenha [(display)]="displayContrasenha" [form]="contrasenhaForm"
+    (confirmChanges)="confirmarCambiarContrasenha()"></app-cambiar-contrasenha>
