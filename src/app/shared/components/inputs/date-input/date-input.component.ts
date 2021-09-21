@@ -30,13 +30,27 @@ export class DateInputComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         if (this.control?.value) {
-            this.model = new Date(this.control?.value);
+            if (this.control?.value.length === 10) {
+                const fechaUTC = new Date(this.control.value);
+                this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
+            } else {
+                this.model = new Date(this.control?.value);
+            }
         } else {
             this.model = null
         }
         this.control.valueChanges.subscribe({
             next: () => {
-                this.model = new Date(this.control?.value);
+                if (this.control?.value) {
+                    if (this.control?.value.length === 10) {
+                        const fechaUTC = new Date(this.control.value);
+                        this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
+                    } else {
+                        this.model = new Date(this.control?.value);
+                    }
+                } else {
+                    this.model = null
+                }
             }
         });
     }
@@ -44,13 +58,27 @@ export class DateInputComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.control) {
             if (this.control?.value) {
-                this.model = new Date(this.control?.value);
+                if (this.control?.value.length === 10) {
+                    const fechaUTC = new Date(this.control.value);
+                    this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
+                } else {
+                    this.model = new Date(this.control?.value);
+                }
             } else {
                 this.model = null;
             }
             this.control.valueChanges.subscribe({
                 next: () => {
-                    this.model = new Date(this.control?.value);
+                    if (this.control?.value) {
+                        if (this.control?.value.length === 10) {
+                            const fechaUTC = new Date(this.control.value);
+                            this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
+                        } else {
+                            this.model = new Date(this.control?.value);
+                        }
+                    } else {
+                        this.model = null
+                    }
                 }
             });
         }

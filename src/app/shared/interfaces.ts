@@ -11,6 +11,14 @@ export interface ListaInterface {
     model: Type<any>;
 }
 
+export interface PasteItemInterface {
+    id: number | string;
+    nombre: string;
+    descripcion?: {icono: string, texto: string}[];
+    etiqueta?: string;
+    subtexto?: string;
+}
+
 export interface VentanaInterface {
     name: string;
     title: string;

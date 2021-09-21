@@ -63,9 +63,7 @@ export class TextInputComponent implements OnInit, OnChanges {
      * Acción a ejecutarse cada que se da click en el icono de la derecha del campo.
      */
     toggleRightIcon(): void {
-        if (!this.readonly) {
-            this.rightIconClick.emit();
-        }
+        this.rightIconClick.emit();
     }
 
     /**

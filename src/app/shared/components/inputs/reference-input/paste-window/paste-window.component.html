@@ -1,0 +1,32 @@
+<p-dialog [header]="'Seleccionar ' + name" [visible]="display" (visibleChange)="setDisplay($event)" [modal]="true"
+    [style]="{width: responsiveWidth}"
+    [draggable]="false" [resizable]="false" class="paste-dialog" [autoZIndex]="true">
+    <div class="pt-2 pr-2 pl-2 pb-2">
+        <span class="p-input-icon-left w-100" [class.p-input-icon-right]="searchInput.value">
+            <i class="pi pi-search"></i>
+            <input #searchInput pInputText type="text" [(ngModel)]="filterValue"
+                
+                placeholder="Buscar..." class="w-100"/>
+            <i class="pi pi-times clear-filter" *ngIf="searchInput.value"
+                (click)="clearSearchInput()"></i>
+        </span>
+    </div>
+    <p-orderList [value]="filteredSource?filteredSource:items" [listStyle]="{'max-height':'60vh'}"
+        filterPlaceholder="Buscar {{name}}..." [dragdrop]="false" class="lista">
+        <ng-template let-row pTemplate="item">
+            <div class="lista-item" (click)="onSelectRow(row)">
+                <div class="product-list-detail">
+                    <h6 class="p-mb-2">{{row.nombre}}</h6>
+                    <span *ngFor="let desc of row.descripcion" class="d-flex w-100 align-items-center">
+                        <i class="material-icons-outlined pr-2">{{desc.icono}}</i>
+                        <span class="product-category">{{desc.texto}}</span>
+                    </span>
+                </div>
+                <div class="d-flex w-100 justify-content-between pt-1 pb-1">
+                    <p-tag severity="warning" *ngIf="row.subtexto">{{row.subtexto}}</p-tag>
+                    <p-tag *ngIf="row.etiqueta">{{row.etiqueta}}</p-tag>
+                </div>
+            </div>
+        </ng-template>
+    </p-orderList>
+</p-dialog>

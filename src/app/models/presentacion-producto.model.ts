@@ -4,21 +4,32 @@ import { IProducto } from './producto.model';
 
 const fb = new FormBuilder();
 
+export interface IExistenciaProducto {
+    precioVenta:               number;
+}
+
 export interface IPresentacionProducto {
     idPresentacionProducto:    number,
     nombre:                    string,
+    codigo:                    string,
     descripcion:               string,
+    flagServicio:              string,
     idProducto:                IProducto
+    existenciaProducto:        IExistenciaProducto
 }
 
 export class PresentacionProductoModel extends RecordModel implements IPresentacionProducto {
     idPresentacionProducto!:   number;
     nombre!:                   string;
+    codigo!:                   string;
     descripcion!:              string;
+    flagServicio!:             string;
     idProducto!:               IProducto;
+    existenciaProducto!:       IExistenciaProducto;
 
     constructor() {
         super();
+        this.flagServicio = "S";
     }
 
     getId(): number {
@@ -35,10 +46,14 @@ export class PresentacionProductoModel extends RecordModel implements IPresentac
 
     getFormGroup(): FormGroup {
         return fb.group({
-            id: [this.idPresentacionProducto],
-            nombre: [this.nombre, Validators.required],
-            descripcion: [this.descripcion, Validators.required],
+            idPresentacionProducto: [this.idPresentacionProducto],
+            codigo: [this.codigo, Validators.required],
+            descripcion: [this.codigo],
+            flagServicio: [this.flagServicio],
             idProducto: [this.idProducto, Validators.required],
+            nombre: [this.nombre, Validators.required],
+            producto_id: [this.idProducto?.idProducto, Validators.required],
+            producto_desc: [this.idProducto?.descripcionGeneral],
         });
     }
 
@@ -46,6 +61,7 @@ export class PresentacionProductoModel extends RecordModel implements IPresentac
         this.descripcion = object.descripcion;
         this.nombre = object.nombre;
         this.idProducto = object.idProducto;
+        this.flagServicio = object.flagServicio;
         return this;
     }
 

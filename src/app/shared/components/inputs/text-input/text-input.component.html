@@ -7,7 +7,7 @@
         autocomplete="off" (focusout)="control?.markAllAsTouched()" (click)="onClickInput()" (input)="change(input.value)"
         [class.is-invalid]="control?.invalid && control?.touched" [class.invalid-noicon]="rightIcon"
         [disabled]="readonly"/>
-        <i class="material-icons-outlined addon-icon" *ngIf="rightIcon" (click)="toggleRightIcon()">{{rightIcon}}</i>
+        <i class="material-icons-outlined addon-icon event-icon" *ngIf="rightIcon" (click)="toggleRightIcon()">{{rightIcon}}</i>
         <div class="invalid-feedback-space" *ngIf="(!control?.invalid || !control?.touched) &&!noPadding"></div>
         <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control?.errors?.required">{{errors.required}}</div>
         <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control?.errors?.maxLenght">{{errors.maxLenght}}</div>

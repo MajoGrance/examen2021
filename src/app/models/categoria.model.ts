@@ -1,6 +1,6 @@
 import { RecordModel } from './base.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TableColumn } from '../shared/interfaces';
+import { TableColumn, PasteItemInterface } from '../shared/interfaces';
 
 const fb = new FormBuilder();
 
@@ -41,10 +41,15 @@ export class CategoriaModel extends RecordModel implements ICategoria{
         return this;
     }
 
-    getPasteColumns(): TableColumn[] {
-        return [
-            { header: 'ID', type: 'id', field: 'idCategoria', filterType: 'numeric' },
-            { header: 'Descripción', type: 'text', field: 'descripcion', filterType: 'text' },
-        ]
+    getPasteItems(objects: ICategoria[]): PasteItemInterface[] {
+        const items: PasteItemInterface[] = [];
+        for (const obj of objects) {
+            const item: PasteItemInterface = {
+                id: obj.idCategoria,
+                nombre: `${obj.idCategoria} - ${obj.descripcion}`,
+            }
+            items.push(item);
+        }
+        return items;
     }
 }

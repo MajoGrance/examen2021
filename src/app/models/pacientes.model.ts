@@ -1,10 +1,11 @@
 import { RecordModel } from './base.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ServiceResponse } from '../shared/interfaces';
 
 const fb = new FormBuilder();
 
 export interface IPaciente {
-    idPersona:        number,
+    idPersona?:       number,
     nombre:           string,
     apellido:         string,
     telefono:         string,
@@ -12,7 +13,7 @@ export interface IPaciente {
     ruc:              string,
     cedula:           string,
     tipoPersona:      string,
-    fechaNacimiento:  Date,
+    fechaNacimiento:  any,
 }
 
 export class PacienteModel extends RecordModel implements IPaciente{
@@ -24,7 +25,7 @@ export class PacienteModel extends RecordModel implements IPaciente{
     ruc!:             string;
     cedula!:          string;
     tipoPersona!:     string;
-    fechaNacimiento!: Date;
+    fechaNacimiento!: any;
 
     constructor() {
         super();
@@ -67,6 +68,37 @@ export class PacienteModel extends RecordModel implements IPaciente{
         this.tipoPersona = object.tipoPersona;
         this.fechaNacimiento = object.fechaNacimiento;
         return this;
+    }
+
+    async save(service: any): Promise<ServiceResponse> {
+        if (service && service.post && service.put) {
+            let method;
+            if (!this.getId()) {
+                const obj = await this.serialize();
+                obj.fechaNacimiento = obj.fechaNacimiento.toISOString().replace(/T.*$/, ' 00:00:00');
+                method = service.post(obj);
+            } else {
+                const obj = await this.serialize();
+                if (String(obj.fechaNacimiento).length === 10) {
+                    obj.fechaNacimiento = `${obj.fechaNacimiento} 00:00:00`;
+                    method = service.put(this.getId(), obj);
+                } else {
+                    obj.fechaNacimiento = obj.fechaNacimiento.toISOString().replace(/T.*$/, ' 00:00:00');
+                    method = service.put(this.getId(), obj);
+                }
+            }
+            const resp = await method;
+            if (resp.ok) {
+                this.setId(resp.resp?.idPersona);
+            }
+            return resp;
+        } else {
+            return {
+                ok: false,
+                msg: 'No se ha proveido servicio correctamente',
+                resp: 'Provea el servicio para guardar y verifique que este implemente los métodos post y put'
+            };
+        }
     }
 
 }

@@ -190,7 +190,7 @@ export class BaseService {
             const ret: ServiceResponse = {
                 ok: true,
                 msg: this.editadoMsg,
-                resp: resp,
+                resp: resp?resp:this.body,
             };
             return ret;
         } catch (error: any) {

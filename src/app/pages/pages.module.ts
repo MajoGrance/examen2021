@@ -8,6 +8,10 @@ import { CategoriaListaComponent } from './categoria/categoria-lista/categoria-l
 import { CategoriaVentanaComponent } from './categoria/categoria-ventana/categoria-ventana.component';
 import { TipoProductoListaComponent } from './tipo-producto/tipo-producto-lista/tipo-producto-lista.component';
 import { TipoProductoVentanaComponent } from './tipo-producto/tipo-producto-ventana/tipo-producto-ventana.component';
+import { PresentacionProductoListaComponent } from './presentacion-producto/presentacion-producto-lista/presentacion-producto-lista.component';
+import { PresentacionProductoVentanaComponent } from './presentacion-producto/presentacion-producto-ventana/presentacion-producto-ventana.component';
+import { PacientesListaComponent } from './clientes/pacientes-lista/pacientes-lista.component';
+import { PacientesVentanaComponent } from './clientes/pacientes-ventana/pacientes-ventana.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +21,10 @@ import { TipoProductoVentanaComponent } from './tipo-producto/tipo-producto-vent
         CategoriaVentanaComponent,
         TipoProductoListaComponent,
         TipoProductoVentanaComponent,
+        PresentacionProductoListaComponent,
+        PresentacionProductoVentanaComponent,
+        PacientesListaComponent,
+        PacientesVentanaComponent,
     ],
     imports: [
         CommonModule,

@@ -1,5 +1,5 @@
 <div class="p-0 text-left w-100">
-    <div class="label mb-1 pl-1" *ngIf="!noPadding">{{ label }}&nbsp;<span *ngIf="control?.errors?.required" style="color: red;">*</span></div>
+    <div class="label mb-1 pl-1"> {{ label }}</div>
     <div class="input-group text-left w-100 text-area" [class.control-padding]="(!control?.invalid || !control?.touched) && !noPadding"
         [class.pb-0]="control.invalid && control.touched" [class.pb-1]="noPadding">
         <textarea [disabled]="readonly" [autoResize]="true"

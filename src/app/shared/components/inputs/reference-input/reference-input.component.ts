@@ -1,9 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef, HostListener, Type } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { LoadingService } from '../../../../services/loading.service';
-import { TableColumn } from '../../../interfaces';
-import { Table } from 'primeng/table';
 import { ToastService } from '../../../../services/toast.service';
+import { SeguridadService } from '../../../../services/seguridad.service';
 
 @Component({
     selector: 'app-reference-input',
@@ -22,6 +21,9 @@ export class ReferenceInputComponent implements OnInit {
     @Input() clase!: any;
     @Input() icon = 'pi pi-search';
     @Input() idField = 'id';
+    @Input() codigoRegistro = '';
+    @Input() funcionFiltro: any;
+    @Input() funcionFiltroParent: any;
     @Output() changeValue = new EventEmitter();
     @Output() paste = new EventEmitter();
     errors = {
@@ -30,29 +32,19 @@ export class ReferenceInputComponent implements OnInit {
         pattern: 'Formato inválido',
     };
     model!: string;
-    filterValue = '';
     display = false;
     source: any[] = [];
-    columns: TableColumn[] = [];
-    /**
-     * Ancho de la pantalla del dispositivo en el que corre el sistema en px.
-     */
-    innerWidth = window.innerWidth;
-    pasteObj: any = {};
-
-    @HostListener('window:resize')
-    onResize(): void {
-        this.innerWidth = window.innerWidth;
-    }
 
     constructor(
         private loadingService: LoadingService,
-        private toastService: ToastService
+        private toastService: ToastService,
+        private seguridadService: SeguridadService,
     ) { }
 
     ngOnInit(): void {
         this.control.setValue(this.control?.value);
         this.model = this.control?.value;
+        this.initField();
         this.control.valueChanges.subscribe({
             next: () => {
                 this.model = this.control?.value;
@@ -64,12 +56,17 @@ export class ReferenceInputComponent implements OnInit {
         if (changes.control) {
             this.control.setValue(this.control?.value);
             this.model = this.control?.value;
+            this.initField();
             this.control.valueChanges.subscribe({
                 next: () => {
                     this.model = this.control?.value;
                 }
             });
         }
+    }
+
+    async initField(): Promise<void> {
+        await this.getSource();
     }
 
     /**
@@ -92,27 +89,46 @@ export class ReferenceInputComponent implements OnInit {
         const id = this.control?.value;
         if (id) {
             this.loadingService.setLoading(true);
-            let service: any;
-            if (this.idField !== 'id') {
-                service = this.service.getAll();
-            } else {
-                service = this.service.get(id)
-            }
-            const resp = await service;
-            if (resp.ok) {
-                let obj: any;
-                if (resp.resp.length) {
-                    obj = resp.resp.find((obj: any) => Number(obj[this.idField]) === Number(id));
+            const objetoLista = this.source.find(obj => String(obj[this.idField]) === String(id));
+            if (objetoLista) {
+                const resp = await this.service.get(id);;
+                if (resp.ok) {
+                    this.paste.emit(resp.resp);
+                } else {
+                    this.paste.emit(null);
                 }
-                this.paste.emit(obj);
             } else {
                 this.paste.emit(null);
             }
             this.loadingService.setLoading(false);
-
         } else {
             this.paste.emit(null);
-        }        
+        }   
+    }
+
+    async getSource(): Promise<void> {
+        let obj: any = {};
+        const user = this.seguridadService.getCurrentUser();
+        const resp = await this.service.getAll(obj);
+        if (resp.ok) {
+            const source = resp.resp.filter((obj: any) => {
+                let value = true;
+                if (obj.hasOwnProperty('activo')) {
+                    if (!obj.activo) {
+                        value = false;
+                    }
+                }
+                
+                return value;
+            })
+            if (this.funcionFiltro) {
+                this.source = this.funcionFiltro(this.funcionFiltroParent, source);
+            } else {
+                this.source = source;
+            }
+        } else {
+            this.toastService.show('top-right', 'error', resp.msg, resp.resp);
+        }
     }
 
     /**
@@ -120,14 +136,8 @@ export class ReferenceInputComponent implements OnInit {
      */
     async openPasteWindow(): Promise<void> {
         this.loadingService.setLoading(true);
-        this.columns = new this.clase().getPasteColumns();
-        const resp = await this.service.getAll();
-        if (resp.ok) {
-            this.source = resp.resp;
-            this.display = true;
-        } else {
-            this.toastService.show('top-right', 'error', resp.msg, resp.resp);
-        }
+        await this.getSource();
+        this.display = true;
         this.loadingService.setLoading(false);
     }
 
@@ -136,28 +146,8 @@ export class ReferenceInputComponent implements OnInit {
      */
     async selectRow(row: any): Promise<void> {
         this.input.nativeElement.focus();
-        this.control.setValue(row[this.idField]);
+        this.control.setValue(row.id);
         this.display = false;
         this.input.nativeElement.blur();
-    }
-
-    /**
-     * Realiza la conversión necesaria para retornar el valor string
-     * del filtro global.
-     * @param event evento de filtro global.
-     * @returns texto ingresado en el filtro globarl.
-     */
-    getValue(event: any): string {
-        return event.value;
-    }
-
-    /**
-     * Limpia el valor del filtro global.
-     * @param input referencia al input del filtro global.
-     * @param dt tabla que contiene la lista de datos.
-     */
-    clearSearchInput(dt: Table): void {
-        this.filterValue = '';
-        dt.filterGlobal(this.filterValue, 'contains')
     }
 }

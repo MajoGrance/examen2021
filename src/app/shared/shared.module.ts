@@ -42,6 +42,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ChartModule } from 'primeng/chart'; 
+import { OrderListModule } from 'primeng/orderlist'; 
 import { SidebarSearchInputComponent } from './components/inputs/sidebar-search-input/sidebar-search-input.component';
 import { TextAreaInputComponent } from './components/inputs/text-area-input/text-area-input.component';
 import { TimeInputComponent } from './components/inputs/time-input/time-input.component';
@@ -51,6 +52,7 @@ import { MultiSelectInputComponent } from './components/inputs/multi-select-inpu
 import { ReferenceInputComponent } from './components/inputs/reference-input/reference-input.component';
 import { DoughnutComponent } from './components/doughnut/doughnut.component';
 import { CambiarContrasenha } from './components/pages-layout/cambiar-contrasenha/cambiar-contrasenha.component';
+import { PasteWindowComponent } from './components/inputs/reference-input/paste-window/paste-window.component';
 
 const PRIMENG = [
     DividerModule,
@@ -80,7 +82,8 @@ const PRIMENG = [
     FieldsetModule,
     DialogModule,
     InputMaskModule,
-    ChartModule
+    ChartModule,
+    OrderListModule
 ]
 
 const DECLARATIONS = [
@@ -102,7 +105,8 @@ const DECLARATIONS = [
     MultiSelectInputComponent,
     ReferenceInputComponent,
     DoughnutComponent,
-    CambiarContrasenha
+    CambiarContrasenha,
+    PasteWindowComponent
 ]
 
 const MATERIAL = [

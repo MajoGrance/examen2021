@@ -41,7 +41,8 @@
                     </th>
                     <th [pSortableColumn]="col.field" *ngFor="let col of columns">
                         {{col.header}}<p-sortIcon [field]="col.field" pTooltip="CTRL + CLICK"></p-sortIcon>
-                        <p-columnFilter [type]="col.filterType" [field]="col.field" display="menu" [showOperator]="false"></p-columnFilter>
+                        <!-- <p-columnFilter [type]="col.filterType" [field]="col.field" display="menu"
+                            [showOperator]="false"></p-columnFilter> -->
                     </th>
                     <th class="actions-column text-center">Acciones</th>
                 </tr>

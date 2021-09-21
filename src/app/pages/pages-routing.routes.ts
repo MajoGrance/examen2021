@@ -8,6 +8,10 @@ import { CategoriaVentanaComponent } from './categoria/categoria-ventana/categor
 import { WindowGuard } from '../guards/window.guard';
 import { TipoProductoListaComponent } from './tipo-producto/tipo-producto-lista/tipo-producto-lista.component';
 import { TipoProductoVentanaComponent } from './tipo-producto/tipo-producto-ventana/tipo-producto-ventana.component';
+import { PresentacionProductoListaComponent } from './presentacion-producto/presentacion-producto-lista/presentacion-producto-lista.component';
+import { PresentacionProductoVentanaComponent } from './presentacion-producto/presentacion-producto-ventana/presentacion-producto-ventana.component';
+import { PacientesListaComponent } from './clientes/pacientes-lista/pacientes-lista.component';
+import { PacientesVentanaComponent } from './clientes/pacientes-ventana/pacientes-ventana.component';
 
 const routes: Routes = [
     {
@@ -20,6 +24,10 @@ const routes: Routes = [
             { path: 'categorias/:id', component: CategoriaVentanaComponent, canDeactivate: [WindowGuard]},
             { path: 'sub-categorias', component: TipoProductoListaComponent },
             { path: 'sub-categorias/:id', component: TipoProductoVentanaComponent, canDeactivate: [WindowGuard]},
+            { path: 'presentacion-productos', component: PresentacionProductoListaComponent },
+            { path: 'presentacion-productos/:id', component: PresentacionProductoVentanaComponent, canDeactivate: [WindowGuard]},
+            { path: 'pacientes', component: PacientesListaComponent },
+            { path: 'pacientes/:id', component: PacientesVentanaComponent, canDeactivate: [WindowGuard]},
             {
                 path: '**',
                 redirectTo: 'dashboard',

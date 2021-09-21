@@ -1,0 +1,46 @@
+<app-window [title]="title" [url]="url" [(editando)]="editando" [(nuevo)]="nuevo" [(form)]="formGroup" 
+    [(object)]="object" [(modificado)]="modificado" [model]="model" [name]="name" [service]="service"
+    [titleField]="titleField">
+    <form [formGroup]="formGroup">
+        <p-tabView>
+            <p-tabPanel header="General">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <app-text-input [control]="formGroup.controls.cedula" label="Cedula" [readonly]="!editando" placeholder="">
+                        </app-text-input>
+                    </div>
+                    <div class="col-lg-4">
+                        <app-text-input [control]="formGroup.controls.nombre" label="Nombre" [readonly]="!editando" placeholder="">
+                        </app-text-input>
+                    </div>
+                    <div class="col-lg-4">
+                        <app-text-input [control]="formGroup.controls.apellido" label="Apellido" [readonly]="!editando" placeholder="">
+                        </app-text-input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <app-text-input [control]="formGroup.controls.ruc" label="RUC" [readonly]="!editando" placeholder="">
+                        </app-text-input>
+                    </div>
+                    <div class="col-lg-4">
+                        <app-text-input [control]="formGroup.controls.email" label="Email" [readonly]="!editando" placeholder="">
+                        </app-text-input>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <app-text-input [control]="formGroup.controls.telefono" label="Telefono" [readonly]="!editando" placeholder="">
+                        </app-text-input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <app-date-input [control]="formGroup.controls.fechaNacimiento" label="Fecha de Nacimiento"
+                            [readonly]="!editando" placeholder="">
+                        </app-date-input>
+                    </div>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+    </form>
+</app-window>
