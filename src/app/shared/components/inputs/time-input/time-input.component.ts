@@ -1,14 +1,16 @@
 import { Component, Input, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { TimePipe } from '../../../../pipes/time.pipe';
 
 @Component({
     selector: 'app-time-input',
     templateUrl: './time-input.component.html',
     styleUrls: ['./time-input.component.scss'],
+    providers: [TimePipe]
 })
 export class TimeInputComponent implements OnInit {
     @Input() control!: AbstractControl;
-    @Input() placeholder = 'hh:mm:ss';
+    @Input() placeholder = 'hh:mm';
     @Input() leftIcon!: string;
     @Input() noPadding!: boolean;
     @Input() readonly!: boolean;
@@ -26,18 +28,28 @@ export class TimeInputComponent implements OnInit {
         pattern: 'Valor inválido',
     };
 
-    constructor() { }
+    constructor(
+        private timePipe: TimePipe
+    ) { }
 
     ngOnInit(): void {
         if (this.control?.value) {
-            this.model = this.control.value;
+            if (this.control.value.length === 4) {
+                this.model = `${this.timePipe.transform(this.control.value)}`;
+            } else {
+                this.model = this.control.value;
+            }
         } else {
             this.model = null
         }
         this.control.valueChanges.subscribe({
             next: () => {
                 if (this.control.value) {
-                    this.model = this.control.value;
+                    if (this.control.value.length === 4) {
+                        this.model = `${this.timePipe.transform(this.control.value)}`;
+                    } else {
+                        this.model = this.control.value;
+                    }
                 }
             }
         });
@@ -46,14 +58,22 @@ export class TimeInputComponent implements OnInit {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.control) {
             if (this.control?.value) {
-                this.model = this.control.value;
+                if (this.control.value.length === 4) {
+                    this.model = `${this.timePipe.transform(this.control.value)}`;
+                } else {
+                    this.model = this.control.value;
+                }
             } else {
                 this.model = null;
             }
             this.control.valueChanges.subscribe({
                 next: () => {
                     if (this.control.value) {
-                        this.model = this.control.value;
+                        if (this.control.value.length === 4) {
+                            this.model = `${this.timePipe.transform(this.control.value)}`;
+                        } else {
+                            this.model = this.control.value;
+                        }
                     }
                 }
             });

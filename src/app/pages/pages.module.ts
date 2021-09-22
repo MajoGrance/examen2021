@@ -12,6 +12,10 @@ import { PresentacionProductoListaComponent } from './presentacion-producto/pres
 import { PresentacionProductoVentanaComponent } from './presentacion-producto/presentacion-producto-ventana/presentacion-producto-ventana.component';
 import { PacientesListaComponent } from './clientes/pacientes-lista/pacientes-lista.component';
 import { PacientesVentanaComponent } from './clientes/pacientes-ventana/pacientes-ventana.component';
+import { HorarioAgendaVentanaComponent } from './horario-agenda/horario-agenda-ventana/horario-agenda-ventana.component';
+import { HorarioAgendaListaComponent } from './horario-agenda/horario-agenda-lista/horario-agenda-lista.component';
+import { HorariosExcepcionListaComponent } from './horarios-excepcion/horarios-excepcion-lista/horarios-excepcion-lista.component';
+import { HorariosExcepcionVentanaComponent } from './horarios-excepcion/horarios-excepcion-ventana/horarios-excepcion-ventana.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +29,10 @@ import { PacientesVentanaComponent } from './clientes/pacientes-ventana/paciente
         PresentacionProductoVentanaComponent,
         PacientesListaComponent,
         PacientesVentanaComponent,
+        HorarioAgendaVentanaComponent,
+        HorarioAgendaListaComponent,
+        HorariosExcepcionListaComponent,
+        HorariosExcepcionVentanaComponent,
     ],
     imports: [
         CommonModule,

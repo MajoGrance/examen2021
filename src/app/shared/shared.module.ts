@@ -53,6 +53,7 @@ import { ReferenceInputComponent } from './components/inputs/reference-input/ref
 import { DoughnutComponent } from './components/doughnut/doughnut.component';
 import { CambiarContrasenha } from './components/pages-layout/cambiar-contrasenha/cambiar-contrasenha.component';
 import { PasteWindowComponent } from './components/inputs/reference-input/paste-window/paste-window.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 const PRIMENG = [
     DividerModule,
@@ -123,6 +124,7 @@ const MATERIAL = [
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        PipesModule,
         ...PRIMENG,
         ...MATERIAL
     ],
@@ -130,6 +132,7 @@ const MATERIAL = [
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        PipesModule,
         ...PRIMENG,
         ...DECLARATIONS,
         ...MATERIAL

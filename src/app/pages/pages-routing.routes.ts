@@ -12,6 +12,10 @@ import { PresentacionProductoListaComponent } from './presentacion-producto/pres
 import { PresentacionProductoVentanaComponent } from './presentacion-producto/presentacion-producto-ventana/presentacion-producto-ventana.component';
 import { PacientesListaComponent } from './clientes/pacientes-lista/pacientes-lista.component';
 import { PacientesVentanaComponent } from './clientes/pacientes-ventana/pacientes-ventana.component';
+import { HorarioAgendaListaComponent } from './horario-agenda/horario-agenda-lista/horario-agenda-lista.component';
+import { HorarioAgendaVentanaComponent } from './horario-agenda/horario-agenda-ventana/horario-agenda-ventana.component';
+import { HorariosExcepcionListaComponent } from './horarios-excepcion/horarios-excepcion-lista/horarios-excepcion-lista.component';
+import { HorariosExcepcionVentanaComponent } from './horarios-excepcion/horarios-excepcion-ventana/horarios-excepcion-ventana.component';
 
 const routes: Routes = [
     {
@@ -28,6 +32,10 @@ const routes: Routes = [
             { path: 'presentacion-productos/:id', component: PresentacionProductoVentanaComponent, canDeactivate: [WindowGuard]},
             { path: 'pacientes', component: PacientesListaComponent },
             { path: 'pacientes/:id', component: PacientesVentanaComponent, canDeactivate: [WindowGuard]},
+            { path: 'horario-agenda', component: HorarioAgendaListaComponent },
+            { path: 'horario-agenda/:id', component: HorarioAgendaVentanaComponent, canDeactivate: [WindowGuard]},
+            { path: 'horario-excepcion', component: HorariosExcepcionListaComponent },
+            { path: 'horario-excepcion/:id', component: HorariosExcepcionVentanaComponent, canDeactivate: [WindowGuard]},
             {
                 path: '**',
                 redirectTo: 'dashboard',

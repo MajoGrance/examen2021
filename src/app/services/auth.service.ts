@@ -30,7 +30,7 @@ export class AuthService {
     async login( body: {usuario: string, contrasenha: string} ): Promise<ServiceResponse> {
         try {
             const resp: {lista: any[], totalDatos: number} = (await this.http.get(`${environment.host}/persona`,
-                {params: {soloUsuariosDelSistema: true}}).toPromise()) as any;
+                {params: {ejemplo: JSON.stringify({soloUsuariosDelSistema: true})}}).toPromise()) as any;
             const ret = {
                 ok: false,
                 msg: 'Credenciales no válidas',

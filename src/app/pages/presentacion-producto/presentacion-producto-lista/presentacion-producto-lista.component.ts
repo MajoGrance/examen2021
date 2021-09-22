@@ -19,7 +19,7 @@ export class PresentacionProductoListaComponent implements OnInit, ListaInterfac
     columns: TableColumn[] = [
         { header: 'ID', type: 'id', field: 'idPresentacionProducto', filterType: 'numeric' },
         { header: 'Nombre', type: 'text', field: 'nombre', filterType: 'text' },
-        { header: 'Producto ID', type: 'text', field: 'idProducto', refName: 'idProducto', refField: 'idProducto', filterType: 'text' },
+        { header: 'Producto ID', type: 'id', field: 'idProducto', refName: 'idProducto', refField: 'idProducto', filterType: 'numeric' },
         { header: 'Producto Desc.', type: 'text', field: 'idProducto.desc', refName: 'idProducto', refField: 'descripcionGeneral',
             filterType: 'text' },
     ]

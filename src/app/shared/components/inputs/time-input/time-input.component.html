@@ -5,7 +5,7 @@
         <span class="p-inputgroup-addon right-addon" *ngIf="leftIcon"><mat-icon class="left-icon">{{leftIcon}}</mat-icon></span>
         <p-calendar class="date-input w-100" [(ngModel)]="model" (onSelect)="change()" dateMask
             (onBlur)="control?.markAllAsTouched()" [timeOnly]="true" icon="pi pi-clock" dataType="string"
-            [class.is-invalid]="control?.invalid && control?.touched" (onInput)="change()" [showSeconds]="true"
+            [class.is-invalid]="control?.invalid && control?.touched" (onInput)="change()"
             [placeholder]="placeholder" [disabled]="readonly" [showIcon]="true" [showTime]="showTime"></p-calendar>
         <div class="invalid-feedback-space" *ngIf="(!control?.invalid || !control?.touched) && !noPadding"></div>
         <div class="invalid-feedback pl-1 pb-0 pt-0" *ngIf="control.errors?.required">{{errors.required}}</div>

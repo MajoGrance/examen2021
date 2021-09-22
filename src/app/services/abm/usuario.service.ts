@@ -7,4 +7,5 @@ import { BaseService } from '../base.service';
 })
 export class UsuariosService extends BaseService {
     url = `${environment.host}/persona`;
+    getParams = {soloUsuariosDelSistema: true};
 }

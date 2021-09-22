@@ -35,7 +35,7 @@ export class MenuItems {
         {
             icon: 'event',
             label: 'Horarios excepcionales',
-            link: '/sitio/horarios-excepcion',
+            link: '/sitio/horario-excepcion',
         },
         {
             icon: 'event_available',

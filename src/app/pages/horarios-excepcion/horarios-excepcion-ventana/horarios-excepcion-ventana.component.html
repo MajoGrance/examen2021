@@ -1,0 +1,50 @@
+<app-window [title]="title" [url]="url" [(editando)]="editando" [(nuevo)]="nuevo" [(form)]="formGroup" 
+    [(object)]="object" [(modificado)]="modificado" [model]="model" [name]="name" [service]="service"
+    [titleField]="titleField">
+    <form [formGroup]="formGroup">
+        <p-tabView>
+            <p-tabPanel header="General">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <app-date-input [control]="formGroup.controls.fechaCadena" label="Dia" [readonly]="!editando" placeholder="">
+                        </app-date-input>
+                    </div>
+                    <div class="col-lg-4">
+                        <app-time-input [control]="formGroup.controls.horaAperturaCadena" label="Hora apertura" [readonly]="!editando"
+                            placeholder="">
+                        </app-time-input>
+                    </div>
+                    <div class="col-lg-4">
+                        <app-time-input [control]="formGroup.controls.horaCierreCadena" label="Hora cierre" [readonly]="!editando"
+                            placeholder="">
+                        </app-time-input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <app-number-input [control]="formGroup.controls.intervaloMinutos" label="Int. Minutos" placeholder=""
+                            [readonly]="!editando" [maxFractionDigits]="0"></app-number-input>
+                    </div>
+                    <div class="col-lg-4">
+                        <app-select-input [control]="formGroup.controls.flagEsHabilitar" label="Habilitar" [readonly]="!editando" placeholder=""
+                            [options]="tipos">
+                        </app-select-input>
+                    </div>
+                </div>
+                <p-fieldset legend="Empleado" styleClass="mt-5">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <app-reference-input [control]="formGroup.controls.empleado_id" label="ID" placeholder=""
+                                [readonly]="!editando" (paste)="pasteEmpleado($event)" [clase]="empleadoModel"
+                                [service]="empleadoService" name="Empleado" idField="idPersona"></app-reference-input>
+                        </div>
+                        <div class="col-lg-8">
+                            <app-text-input [control]="formGroup.controls.empleado_nombre" label="Nombre" placeholder=""
+                                [readonly]="true"></app-text-input>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </p-tabPanel>
+        </p-tabView>
+    </form>
+</app-window>

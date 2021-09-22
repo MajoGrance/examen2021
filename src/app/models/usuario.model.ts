@@ -1,5 +1,6 @@
 import { RecordModel } from './base.model';
 import { FormBuilder } from '@angular/forms';
+import { PasteItemInterface } from '../shared/interfaces';
 const fb = new FormBuilder();
 
 export interface IUsuario {
@@ -29,5 +30,22 @@ export class UsuarioModel extends RecordModel implements IUsuario{
 
     serialize(): IUsuario {
         return super.serialize();
+    }
+
+    getPasteItems(objects: IUsuario[]): PasteItemInterface[] {
+        const items: PasteItemInterface[] = [];
+        for (const obj of objects) {
+            const item: PasteItemInterface = {
+                id: obj.idPersona,
+                nombre: `${obj.idPersona} - ${obj.nombre} ${obj.apellido}`,
+                descripcion: [
+                    {icono: 'category', texto: `RUC: ${obj.ruc}`},
+                    {icono: 'label', texto: `Cedula: ${obj.cedula}`}
+                ],
+                subtexto: this.usuarioLogin
+            }
+            items.push(item);
+        }
+        return items;
     }
 }

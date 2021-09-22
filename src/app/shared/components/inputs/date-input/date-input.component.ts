@@ -1,10 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { StringDatePipe } from '../../../../pipes/stringDate.pipe';
 
 @Component({
     selector: 'app-date-input',
     templateUrl: './date-input.component.html',
     styleUrls: ['./date-input.component.scss'],
+    providers: [StringDatePipe]
 })
 export class DateInputComponent implements OnInit, OnChanges {
     @Input() control!: AbstractControl;
@@ -26,11 +28,15 @@ export class DateInputComponent implements OnInit, OnChanges {
         pattern: 'Valor inválido',
     };
 
-    constructor() { }
+    constructor(
+        private stringDate: StringDatePipe
+    ) { }
 
     ngOnInit(): void {
         if (this.control?.value) {
-            if (this.control?.value.length === 10) {
+            if (this.control?.value.length === 8) {
+                this.model = this.stringDate.transform(this.control.value);
+            } else if (this.control?.value.length === 10) {
                 const fechaUTC = new Date(this.control.value);
                 this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
             } else {
@@ -42,7 +48,9 @@ export class DateInputComponent implements OnInit, OnChanges {
         this.control.valueChanges.subscribe({
             next: () => {
                 if (this.control?.value) {
-                    if (this.control?.value.length === 10) {
+                    if (this.control?.value.length === 8) {
+                        this.model = this.stringDate.transform(this.control.value);
+                    } else if (this.control?.value.length === 10) {
                         const fechaUTC = new Date(this.control.value);
                         this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
                     } else {
@@ -58,7 +66,9 @@ export class DateInputComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.control) {
             if (this.control?.value) {
-                if (this.control?.value.length === 10) {
+                if (this.control?.value.length === 8) {
+                    this.model = this.stringDate.transform(this.control.value);
+                } else if (this.control?.value.length === 10) {
                     const fechaUTC = new Date(this.control.value);
                     this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
                 } else {
@@ -70,7 +80,9 @@ export class DateInputComponent implements OnInit, OnChanges {
             this.control.valueChanges.subscribe({
                 next: () => {
                     if (this.control?.value) {
-                        if (this.control?.value.length === 10) {
+                        if (this.control?.value.length === 8) {
+                            this.model = this.stringDate.transform(this.control.value);
+                        } else if (this.control?.value.length === 10) {
                             const fechaUTC = new Date(this.control.value);
                             this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
                         } else {

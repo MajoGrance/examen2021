@@ -38,6 +38,10 @@ export class BaseService {
      * Mensaje a mostrarse cuando se edita un registro.
      */
     deleteFields: string[] = [];
+    /**
+     * Parametros de la consulta get.
+     */
+    getParams: any = {};
 
     constructor(
         public http: HttpClient,
@@ -145,13 +149,18 @@ export class BaseService {
      */
     async getAll(filter?: any): Promise<ServiceResponse> {
         try {
+            if (filter) {
+                filter = {...filter, ...this.getParams}
+            } else {
+                filter = {...this.getParams}
+            }
             const url = this.url;
             const options: any = {
                 headers: this.headers,
             }
             if (filter) {
-                options.params = filter;
-            } 
+                options.params = {ejemplo: JSON.stringify(filter?filter:{})};
+            }
             const resp : any= await this.http.get<any>(url, options).toPromise();
             const ret: ServiceResponse = {
                 ok: true,

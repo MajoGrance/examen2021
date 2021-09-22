@@ -89,6 +89,22 @@
                                 <span *ngIf="col.refField && col.refName">{{row[col.refName]?row[col.refName][col.refField]:'' | date: 'dd/MM/yyyy'}}</span>
                                 <span *ngIf="!col.refField || !col.refName">{{row[col.field] | date: 'dd/MM/yyyy'}}</span>
                             </span>
+                            <span *ngIf="col.type ==='time'">
+                                <span *ngIf="col.refField && col.refName">{{row[col.refName]?row[col.refName][col.refField]:'' | time}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row[col.field] | time}}</span>
+                            </span>
+                            <span *ngIf="col.type ==='flagBoolean'" [class.text-center]="innerWidth>=641" [class.w-100]="innerWidth>=641">
+                                <span *ngIf="row[col.field] === 'S'">
+                                    <mat-icon class="material-icons-outlined check-icon">check_circle</mat-icon>
+                                </span>
+                                <span *ngIf="row[col.field] === 'N'">
+                                    <mat-icon class="material-icons-outlined cancel-icon">cancel</mat-icon>
+                                </span>
+                            </span>
+                            <span *ngIf="col.type ==='stringDate'">
+                                <span *ngIf="col.refField && col.refName">{{row[col.refName]?row[col.refName][col.refField]:'' | stringDate | date: 'dd/MM/yyyy'}}</span>
+                                <span *ngIf="!col.refField || !col.refName">{{row[col.field] | stringDate | date: 'dd/MM/yyyy'}}</span>
+                            </span>
                         </span>
                     </td>
                     <td class="text-center actions-column">

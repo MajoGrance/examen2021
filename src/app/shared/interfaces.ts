@@ -38,7 +38,7 @@ export interface TableColumn {
     field: string;
     refField?: string;
     refName?: string;
-    type: 'text' | 'numeric' | 'date' | 'boolean' | 'list' | 'hidden' | 'option' | 'id';
+    type: 'text' | 'numeric' | 'date' | 'boolean' | 'list' | 'hidden' | 'option' | 'id' | 'time' | 'flagBoolean' | 'stringDate';
     filterType: 'text' | 'numeric' | 'date' | 'boolean' | 'option';
     hidden?: boolean;
     labels?: string[];
