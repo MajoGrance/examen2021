@@ -30,6 +30,10 @@
                 </app-text-input>
             </div>
         </div>
+        <div class="col-lg-12">
+            <app-text-area-input [control]="servicio.controls.observacion" label="" placeholder="">
+            </app-text-area-input>
+        </div>
     </p-fieldset>
     <p-fieldset legend="Ficha" styleClass="mt-6">
         <span class="danger-text" *ngIf="!seleccionado.value">Debe seleccionar una ficha</span>

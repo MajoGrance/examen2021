@@ -24,6 +24,15 @@
                 <app-text-input [control]="servicio.controls.cliente_nombre" label="" placeholder="" [readonly]="true">
                 </app-text-input>
             </div>
+            <div class="col-lg-12">
+                <app-text-area-input [control]="servicio.controls.observacion" label="" placeholder="">
+                </app-text-area-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-right">
+                <button pButton pRipple label="Editar servicio" icon="pi pi-save" class="mr-2 mt-3" (click)="save()"></button>
+            </div>
         </div>
     </p-fieldset>
     <p-fieldset legend="Ficha" styleClass="mt-6">

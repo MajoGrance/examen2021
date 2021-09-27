@@ -148,15 +148,17 @@ export class ServicioEditarComponent implements OnInit, OnDestroy {
 
     async save(): Promise<void> {
         this.servicio.markAllAsTouched();
-        if (this.servicio.valid && this.servicio?.value) {
+        if (this.servicio.valid) {
             const obj: IServicio = this.servicio.getRawValue();
             const form = {
-                idFichaClinica: {
-                    idFichaClinica: obj?.idFichaClinica?.idFichaClinica
-                },
+                // idFichaClinica: {
+                //     idFichaClinica: obj?.idFichaClinica?.idFichaClinica
+                // },
+                idServicio: obj.idServicio,
                 observacion: obj?.observacion
             }
-            const resp = await this.servicioService.put(obj?.idFichaClinica?.idFichaClinica, form);
+            const resp = await this.servicioService.put(obj?.idServicio, form);
+            console.log(resp);
             if (resp.ok) {
                 this.toastService.show('top-right', 'success', resp.msg, resp?.resp?.idServicio);
                 this.router.navigate(['sitio','servicios','lista']);

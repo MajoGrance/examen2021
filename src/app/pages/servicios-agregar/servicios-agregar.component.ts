@@ -94,15 +94,16 @@ export class ServiciosAgregarComponent implements OnInit {
         private copyService: CopyService,
     ) { }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         if ( this.copyService.object && this.copyService.url === 'sitio/servicios/agregar') {
-            console.log(this.copyService.object);
             this.servicio.get('idCliente')?.setValue(this.copyService.object.idCliente);
             this.servicio.get('cliente')?.setValue(this.copyService.object.idCliente.idPersona);
             this.pasteCliente(this.copyService.object.idCliente);
             this.servicio.get('idEmpleado')?.setValue(this.copyService.object.idEmpleado);
             this.servicio.get('empleado')?.setValue(this.copyService.object.idEmpleado.idPersona);
-            this.pasteEmpleado(this.copyService.object.idEmpleado);
+            await this.pasteEmpleado(this.copyService.object.idEmpleado);
+            const obj = this.fichas.find(obj=>obj.idFichaClinica=this.copyService.object?.idFichaClinica);
+            this.seleccionado.setValue(obj);
         }
     }
 
