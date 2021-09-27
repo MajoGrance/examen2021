@@ -29,4 +29,7 @@
     ::ng-deep .p-disabled {
         opacity: 1;
     }
+    ::ng-deep .p-toast {
+        max-width: 20rem;
+    }
 }

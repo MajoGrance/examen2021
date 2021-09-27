@@ -383,6 +383,7 @@ export class CRUDComponent implements OnInit, AfterViewInit {
         for(const select of this.selected) {
             const resp = await (new this.model().deserialize(select).delete(this.service));
             if (resp.ok) {
+                this.selected = []
                 this.toastService.show('top-right', 'success', resp.msg, resp.resp);
             } else {
                 this.toastService.show('top-right', 'error', resp.msg, resp.resp);
@@ -393,6 +394,7 @@ export class CRUDComponent implements OnInit, AfterViewInit {
     }
 
     async delete(row: any): Promise<void> {
+        console.log('entra');
         const confirmacion = await this.mensajeService.eliminarRegistros([row]);
         if (!confirmacion) {
             return;
