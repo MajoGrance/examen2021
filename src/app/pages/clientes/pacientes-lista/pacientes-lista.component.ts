@@ -1,7 +1,9 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { ListaInterface, TableColumn } from '../../../shared/interfaces';
 import { PacienteModel } from '../../../models/pacientes.model';
 import { PacienteService } from '../../../services/abm/paciente-producto.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CRUDComponent } from '../../../shared/components/crud/crud.component';
 
 @Component({
     selector: 'app-pacientes-lista',
@@ -9,6 +11,7 @@ import { PacienteService } from '../../../services/abm/paciente-producto.service
     styleUrls: ['./pacientes-lista.component.scss']
 })
 export class PacientesListaComponent implements OnInit, ListaInterface {
+    @ViewChild('crud', {static: false}) crud!: CRUDComponent;
     /**
      * Nombre del registro.
      */
@@ -37,10 +40,32 @@ export class PacientesListaComponent implements OnInit, ListaInterface {
      * Clase del modelo correspondiente al registro.
      */
     model: Type<any> = PacienteModel;
+    filtrosForm: FormGroup = this.fb.group({
+        apellido: [''],
+        nombre: ['']
+    });
+
+    get filtros(): any {
+        const obj = this.filtrosForm.value;
+        const ret: any = {};
+        if (obj.apellido) {
+            ret.apellido = obj.apellido;
+        }
+        if (obj.nombre) {
+            ret.nombre = obj.nombre;
+        }
+        return ret;
+    }
     
     constructor(
-        public service: PacienteService
+        public service: PacienteService,
+        private fb: FormBuilder
     ) { }
     
     ngOnInit(): void { }
+
+    getSource(): void {
+        this.filtrosForm.markAllAsTouched();
+        this.crud.getData();
+    }
 }

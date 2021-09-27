@@ -1,14 +1,21 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { ListaInterface, TableColumn } from '../../../shared/interfaces';
 import { HorarioExcepcionModel } from '../../../models/horario-excepcion';
 import { HorarioExcepcionService } from '../../../services/abm/horario-excepcion.service';
+import { UsuarioModel } from '../../../models/usuario.model';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { CRUDComponent } from '../../../shared/components/crud/crud.component';
+import { UsuariosService } from '../../../services/abm/usuario.service';
+import { StringDatePipe } from '../../../pipes/stringDate.pipe';
 
 @Component({
     selector: 'app-horarios-excepcion-lista',
     templateUrl: './horarios-excepcion-lista.component.html',
-    styleUrls: ['./horarios-excepcion-lista.component.scss']
+    styleUrls: ['./horarios-excepcion-lista.component.scss'],
+    providers: [StringDatePipe]
 })
 export class HorariosExcepcionListaComponent implements OnInit, ListaInterface {
+    @ViewChild('crud', {static: false}) crud!: CRUDComponent;
     /**
      * Nombre del registro.
      */
@@ -39,10 +46,42 @@ export class HorariosExcepcionListaComponent implements OnInit, ListaInterface {
      * Clase del modelo correspondiente al registro.
      */
     model: Type<any> = HorarioExcepcionModel;
+    empleadoModel: Type<any> = UsuarioModel;
+    filtrosForm: FormGroup = this.fb.group({
+        empleado: [''],
+        fecha: [new Date()]
+    });
+
+    get filtros(): any {
+        const obj = this.filtrosForm.value;
+        const ret: any = {};
+        if (obj.empleado) {
+            ret.idEmpleado = {idPersona: obj.empleado};
+        }
+        if (obj.fecha) {
+            ret.fechaCadena = this.stringDate.inverse(obj.fecha).replace(/-/g, '');
+        }
+        return ret;
+    }
     
     constructor(
-        public service: HorarioExcepcionService
+        public service: HorarioExcepcionService,
+        private fb: FormBuilder,
+        public empleadoService: UsuariosService,
+        private stringDate: StringDatePipe
     ) { }
     
     ngOnInit(): void { }
+
+    getSource(): void {
+        this.filtrosForm.markAllAsTouched();
+        this.crud.getData();
+    }
+
+    getFilters(): void {
+        this.filtrosForm = this.fb.group({
+            empleado: [''],
+            fecha: ['']
+        });
+    }
 }

@@ -35,7 +35,7 @@
                 <li *ngFor="let item of item.children" class="border-bottom-light item pt-0 pb-0">
                     <div class="row menu-item pt-0 pb-0 w-100 h-100 d-inline-flex align-items-center" [class.active-item]="isActive(item.link)"
                         (click)="navigate(item.link);closeMenu()">
-                        <mat-icon class="menu-icon-sub material-icons-outlined pr-5 pl-0">{{item.icon}}</mat-icon>
+                        <mat-icon class="menu-icon-sub material-icons-outlined pl-2 mr-3">{{item.icon}}</mat-icon>
                         {{item.label}}
                     </div>
                 </li>

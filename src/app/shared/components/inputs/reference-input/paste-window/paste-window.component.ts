@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, HostListener, Type, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, HostListener, Type, OnChanges } from '@angular/core';
 import { PasteItemInterface } from '../../../../interfaces';
 import { FilterService } from 'primeng/api';
 
@@ -7,7 +7,7 @@ import { FilterService } from 'primeng/api';
     templateUrl: './paste-window.component.html',
     styleUrls: ['./paste-window.component.scss']
 })
-export class PasteWindowComponent implements OnInit, OnChanges {
+export class PasteWindowComponent implements OnInit {
     @Input() name = '';
     @Input() display!: boolean;
     @Input() source: any[] = [];
@@ -15,7 +15,6 @@ export class PasteWindowComponent implements OnInit, OnChanges {
     @Output() selectRow = new EventEmitter();
     @Output() displayChange = new EventEmitter();
     filterValue = '';
-    items: PasteItemInterface[] = []
     responsiveWidth = '';
     /**
      * Ancho de la pantalla del dispositivo en el que corre el sistema en px.
@@ -26,6 +25,17 @@ export class PasteWindowComponent implements OnInit, OnChanges {
     onResize(): void {
         this.innerWidth = window.innerWidth;
         this.getResponsiveWidth();
+    }
+
+    get items(): PasteItemInterface[] {
+        let items: PasteItemInterface[] = [];
+        if (this.clase) {
+            const modelo = new this.clase();
+            if (modelo.getPasteItems) {
+                items = modelo.getPasteItems(this.source);
+            }
+        }
+        return items;
     }
 
     get filteredSource(): PasteItemInterface[] | null {
@@ -64,12 +74,6 @@ export class PasteWindowComponent implements OnInit, OnChanges {
         this.getResponsiveWidth();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.source) {
-            this.getItems();
-        }
-    }
-
     getResponsiveWidth(): void {
         if (this.innerWidth < 641) {
             this.responsiveWidth = '22rem';
@@ -84,17 +88,6 @@ export class PasteWindowComponent implements OnInit, OnChanges {
     setDisplay(value: boolean): void {
         this.display = value;
         this.displayChange.emit(this.display);
-    }
-
-    getItems(): void{
-        let items: PasteItemInterface[] = [];
-        if (this.clase) {
-            const modelo = new this.clase();
-            if (modelo.getPasteItems) {
-                items = modelo.getPasteItems(this.source);
-            }
-        }
-        this.items = items;
     }
 
     /**

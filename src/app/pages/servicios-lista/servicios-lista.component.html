@@ -1,0 +1,126 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">list</i> Listar Servicios
+    </div>
+    <p-fieldset legend="Filtros" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-date-input [control]="filters.controls.fecha_desde" label="Desde Fecha"></app-date-input>
+            </div>
+            <div class="col-lg-4">
+                <app-date-input [control]="filters.controls.fecha_hasta" label="Hasta Fecha"></app-date-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="filters.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-4">
+                <app-reference-input [control]="filters.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente"
+                    idField="idPersona"></app-reference-input>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="filters.controls.categoria" label="Categoría" placeholder=""
+                    [clase]="categoriaModel" [service]="categoriaService" name="Categoría"
+                    idField="idCategoria" (paste)="pasteCategoria($event)"></app-reference-input>
+            </div>
+            <div class="col-lg-4">
+                <app-reference-input [control]="filters.controls.subcategoria" label="Sub categoría" placeholder=""
+                    [clase]="tipoProductoModel" [service]="tipoProductoService" name="Sub categoría"
+                    idField="idTipoProducto" [readonly]="!filters.controls.categoria.value"
+                    [filtros]="filtroSubCategoria" [filtersValid]=filtroSubCategoria?.idCategoria?.idCategoria></app-reference-input>
+            </div>
+        </div> -->
+        <button pButton pRipple label="Buscar" icon="pi pi-check" class="mr-2" (click)="getServicios()"></button>
+        <button pButton pRipple label="Limpiar" icon="pi pi-times" class="p-button-warning mr-2" (click)="limpiar()"></button>
+        <button pButton pRipple label="Agregar servicio" icon="pi pi-plus" class="p-button-success"
+            (click)="navigate('/sitio/servicios/agregar')"></button>
+    </p-fieldset>
+    <p-table #dt [value]="source" [rows]="10" [paginator]="true"
+         [responsive]="true" sortMode="multiple" filterMode="menu"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+        styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+        [showCurrentPageReport]="true" [autoLayout]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="fechaHoraCadena">
+                    Fecha<p-sortIcon field="fechaHoraCadena" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="profesional">
+                    Profesional<p-sortIcon field="profesional" pTooltip="CTRL + CLICK"></p-sortIcon>
+                <th pSortableColumn="cliente">
+                    Cliente<p-sortIcon field="cliente" pTooltip="CTRL + CLICK"></p-sortIcon>
+                <th pSortableColumn="categoria">
+                    Categoría<p-sortIcon field="categoria" pTooltip="CTRL + CLICK"></p-sortIcon>
+                <th pSortableColumn="subcategoria">
+                    Sub categoría<p-sortIcon field="subcategoria" pTooltip="CTRL + CLICK"></p-sortIcon>
+                <th class="actions-column text-center">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+            <tr class="animate__animated animate__fadeIn animate__faster">
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Fecha</span>
+                        <span>
+                            <span>{{row.fechaHoraCadena | stringDate | date: 'd/M/yyyy'}}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Profesional</span>
+                        <span>
+                            <span>{{row.profesional}}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Cliente</span>
+                        <span>
+                            <span>{{row.cliente}}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Categoría</span>
+                        <span>
+                            <span>{{row.categoria}}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Subcategoría</span>
+                        <span>
+                            <span>{{row.subcategoria}}</span>
+                        </span>
+                    </span>
+                </td>
+                <td class="text-center actions-column">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="editarServicio(row)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="animate__animated animate__fadeIn animate__faster">
+                <td [attr.colspan]="7" class="text-center">
+                    <div class="container">
+                        <br>
+                        <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                        No se encontraron reservas.<br><br>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+<!-- <app-editar-observacion [(display)]="displayEditar" [reserva]="reservaForm"></app-editar-observacion> -->

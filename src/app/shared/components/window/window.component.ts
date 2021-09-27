@@ -25,6 +25,7 @@ export class WindowComponent implements OnInit, OnDestroy {
     @Input() name!: string;
     @Input() object!: any;
     @Input() modificado!: any;
+    @Input() existencia!: any;
     @Input() titleField = 'id';
     @Output() formChange = new EventEmitter();
     @Output() objectChange = new EventEmitter();
@@ -290,7 +291,11 @@ export class WindowComponent implements OnInit, OnDestroy {
         this.form.markAllAsTouched();
         if (this.form.valid) {
             this.loadingService.setLoading(true);
-            const modelo = new this.model().deserialize(this.form.getRawValue());
+            const obj = this.form.getRawValue();
+            if (this.existencia) {
+                obj.existenciaProducto = this.existencia;
+            }
+            const modelo = new this.model().deserialize(obj);
             if (this.object.activo && !modelo.activo) {
                 const user = this.seguridadService.getCurrentUser();
                 modelo.inactivado_por = user?.usuarioLogin;

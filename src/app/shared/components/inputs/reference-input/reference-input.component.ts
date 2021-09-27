@@ -16,12 +16,14 @@ export class ReferenceInputComponent implements OnInit {
     @Input() name = '';
     @Input() readonly!: boolean;
     @Input() noPadding!: boolean;
+    @Input() filtersValid!: boolean;
     @Input() label = '';
     @Input() service: any;
     @Input() clase!: any;
     @Input() icon = 'pi pi-search';
     @Input() idField = 'id';
     @Input() codigoRegistro = '';
+    @Input() filtros: any;
     @Input() funcionFiltro: any;
     @Input() funcionFiltroParent: any;
     @Output() changeValue = new EventEmitter();
@@ -107,9 +109,14 @@ export class ReferenceInputComponent implements OnInit {
     }
 
     async getSource(): Promise<void> {
-        let obj: any = {};
-        const user = this.seguridadService.getCurrentUser();
-        const resp = await this.service.getAll(obj);
+        if (this.filtros && !this.filtersValid) {
+            return;
+        }
+        let obj1: any = {};
+        if(this.filtros) {
+            obj1 = this.filtros
+        }
+        const resp = await this.service.getAll(obj1);
         if (resp.ok) {
             const source = resp.resp.filter((obj: any) => {
                 let value = true;

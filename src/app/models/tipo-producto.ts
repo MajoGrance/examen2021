@@ -1,7 +1,7 @@
 import { RecordModel } from './base.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICategoria } from './categoria.model';
-import { TableColumn } from '../shared/interfaces';
+import { TableColumn, PasteItemInterface } from '../shared/interfaces';
 
 const fb = new FormBuilder();
 
@@ -48,4 +48,16 @@ export class TipoProductoModel extends RecordModel implements ITipoProducto {
         return this;
     }
 
+    getPasteItems(objects: ITipoProducto[]): PasteItemInterface[] {
+        const items: PasteItemInterface[] = [];
+        for (const obj of objects) {
+            const item: PasteItemInterface = {
+                id: obj.idTipoProducto,
+                nombre: `${obj.idTipoProducto} - ${obj.descripcion}`,
+                descripcion: [{icono: 'label', texto: `${obj.idCategoria?.descripcion?obj.idCategoria?.descripcion:''}`}]
+            }
+            items.push(item);
+        }
+        return items;
+    }
 }

@@ -36,6 +36,8 @@ export class DateInputComponent implements OnInit, OnChanges {
         if (this.control?.value) {
             if (this.control?.value.length === 8) {
                 this.model = this.stringDate.transform(this.control.value);
+            } else if (this.control?.value.length === 14) {
+                this.model = this.stringDate.transform(this.control.value);
             } else if (this.control?.value.length === 10) {
                 const fechaUTC = new Date(this.control.value);
                 this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
@@ -49,6 +51,8 @@ export class DateInputComponent implements OnInit, OnChanges {
             next: () => {
                 if (this.control?.value) {
                     if (this.control?.value.length === 8) {
+                        this.model = this.stringDate.transform(this.control.value);
+                    } else if (this.control?.value.length === 14) {
                         this.model = this.stringDate.transform(this.control.value);
                     } else if (this.control?.value.length === 10) {
                         const fechaUTC = new Date(this.control.value);
@@ -68,6 +72,8 @@ export class DateInputComponent implements OnInit, OnChanges {
             if (this.control?.value) {
                 if (this.control?.value.length === 8) {
                     this.model = this.stringDate.transform(this.control.value);
+                } else if (this.control?.value.length === 14) {
+                    this.model = this.stringDate.transform(this.control.value);
                 } else if (this.control?.value.length === 10) {
                     const fechaUTC = new Date(this.control.value);
                     this.model = new Date(fechaUTC.getUTCFullYear(), fechaUTC.getUTCMonth(), fechaUTC.getUTCDate());
@@ -81,6 +87,8 @@ export class DateInputComponent implements OnInit, OnChanges {
                 next: () => {
                     if (this.control?.value) {
                         if (this.control?.value.length === 8) {
+                            this.model = this.stringDate.transform(this.control.value);
+                        } else if (this.control?.value.length === 14) {
                             this.model = this.stringDate.transform(this.control.value);
                         } else if (this.control?.value.length === 10) {
                             const fechaUTC = new Date(this.control.value);

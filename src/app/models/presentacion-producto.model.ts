@@ -1,6 +1,7 @@
 import { RecordModel } from './base.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IProducto } from './producto.model';
+import { PasteItemInterface } from '../shared/interfaces';
 
 const fb = new FormBuilder();
 
@@ -54,6 +55,7 @@ export class PresentacionProductoModel extends RecordModel implements IPresentac
             nombre: [this.nombre, Validators.required],
             producto_id: [this.idProducto?.idProducto, Validators.required],
             producto_desc: [this.idProducto?.descripcionGeneral],
+            existenciaProducto: [this.existenciaProducto]
         });
     }
 
@@ -63,6 +65,22 @@ export class PresentacionProductoModel extends RecordModel implements IPresentac
         this.idProducto = object.idProducto;
         this.flagServicio = object.flagServicio;
         return this;
+    }
+
+    getPasteItems(objects: IPresentacionProducto[]): PasteItemInterface[] {
+        const items: PasteItemInterface[] = [];
+        for (const obj of objects) {
+            const item: PasteItemInterface = {
+                id: obj.idPresentacionProducto,
+                nombre: `${obj.idPresentacionProducto} - ${obj.nombre}`,
+                descripcion: [
+                    {icono: 'category', texto: `Categoria: ${obj.idProducto?.idTipoProducto?.idCategoria?.descripcion}`},
+                    {icono: 'label', texto: `Sub categoría: ${obj.idProducto?.idTipoProducto?.descripcion}`}
+                ]
+            }
+            items.push(item);
+        }
+        return items;
     }
 
 }

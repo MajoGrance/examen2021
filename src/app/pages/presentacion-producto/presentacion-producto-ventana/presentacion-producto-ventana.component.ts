@@ -1,13 +1,14 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { VentanaInterface } from '../../../shared/interfaces';
 import { PresentacionProductoModel, IPresentacionProducto } from '../../../models/presentacion-producto.model';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ProductoModel, IProducto } from '../../../models/producto.model';
 import { PresentacionProductoService } from '../../../services/abm/presentacion-producto.service';
 import { ProductoService } from '../../../services/abm/producto.service';
 import { MensajesService } from '../../../services/mensajes.service';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Location } from '@angular/common';
+import { ExistenciaProductoService } from '../../../services/abm/existencia-producto.service';
 
 @Component({
     selector: 'app-presentacion-producto-ventana',
@@ -59,15 +60,42 @@ export class PresentacionProductoVentanaComponent implements OnInit, VentanaInte
      * Modelo de la referencia a categoria.
      */
     productoModel: Type<any> = ProductoModel;
+    precio = new FormControl();
+    existencia: any;
 
     constructor(
         public service: PresentacionProductoService,
         public productoService: ProductoService,
         private mensajeService: MensajesService,
         private location: Location,
+        private existenciaProducto: ExistenciaProductoService,
     ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        setTimeout(() => {
+            this.getExistencia();
+        },800)
+    }
+
+    async getExistencia(): Promise<void> {
+        if (this.formGroup.value.idPresentacionProducto) {
+            const filter = {"idPresentacionProductoTransient": this.formGroup.value.idPresentacionProducto}
+            const resp = await this.existenciaProducto.getAll(filter);
+            if (resp.ok) {
+                const objr = resp.resp[0]
+                this.precio.setValue(objr?objr.precioVenta:0);
+            }
+            this.existencia = {
+                precioVenta: this.precio.value
+            }
+        }
+    }
+
+    setExistencia(): void {
+        this.existencia = {
+            precioVenta: this.precio.value
+        }
+    }
 
     /**
      * Determina si se puede desactivar la página.

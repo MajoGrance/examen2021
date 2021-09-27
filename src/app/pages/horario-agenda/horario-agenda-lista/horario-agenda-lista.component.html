@@ -1,1 +1,20 @@
-<app-crud [title]="title" [columns]="columns" [service]="service" [url]="url" [idField]="idField" [model]="model"></app-crud>
+<div class="mb-5 mt-2">
+    <p-card>
+        <div class="card-title shadow-5 d-flex align-items-center">
+            <i class="material-icons-outlined pr-2 mod-icon">filter</i> FILTROS
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <app-reference-input [control]="filtrosForm.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-6">
+                <app-select-input [control]="filtrosForm.controls.dia" label="Día" placeholder="" [options]="dias"></app-select-input>
+            </div>
+        </div>
+        <button pButton pRipple label="Consultar" icon="pi pi-search" class="mr-2 mt-3" (click)="getSource()"></button>
+    </p-card>
+</div>
+<app-crud #crud [title]="title" [columns]="columns" [service]="service" [url]="url" [idField]="idField" [model]="model"
+    [filtros]="filtros" [filtersValid]="filtrosForm.valid"></app-crud>

@@ -39,6 +39,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ChartModule } from 'primeng/chart'; 
@@ -84,7 +85,8 @@ const PRIMENG = [
     DialogModule,
     InputMaskModule,
     ChartModule,
-    OrderListModule
+    OrderListModule,
+    RadioButtonModule
 ]
 
 const DECLARATIONS = [

@@ -1,0 +1,116 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">add_task</i> Reservar
+    </div>
+    <p-fieldset legend="Reserva" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-date-input [control]="reserva.controls.fechaCadena" label="Fecha"
+                    (changeValue)="getAgenda()"></app-date-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="reserva.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado" (paste)="pasteEmpleado($event)"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="reserva.controls.empleado_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="reserva.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente" (paste)="pasteCliente($event)"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="reserva.controls.cliente_nombre" label="" placeholder="" [readonly]="true">
+                </app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <app-text-area-input [control]="reserva.controls.observacion" label="Observación" placeholder=""></app-text-area-input>
+            </div>
+        </div>
+    </p-fieldset>
+    <p-fieldset legend="Agenda" styleClass="mt-6">
+        <div class="row mb-3">
+            <div class="col-lg-6 d-flex align-items-center">
+                <app-boolean-input [control]="mostrarAgenda" label="Mostrar ya reservados"
+                    (changeValue)="getAgenda()"></app-boolean-input>
+            </div>
+        </div>
+        <span class="danger-text" *ngIf="!seleccionado.value">Debe seleccionar un horario</span>
+        <p-table #dt [value]="source" [rows]="10" [paginator]="true"
+            [responsive]="true" sortMode="multiple" filterMode="menu"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+            [showCurrentPageReport]="true" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="horaInicioCadena">
+                        Hora Inicio<p-sortIcon field="horaInicioCadena" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="horaFinCadena">
+                        Hora Fin<p-sortIcon field="horaFinCadena" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="cliente">
+                        Cliente<p-sortIcon field="cliente" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th class="actions-column text-center">Seleccionar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Fecha</span>
+                            <span>
+                                <span>{{row.horaInicioCadena | time}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Hora</span>
+                            <span>
+                                <span>{{row.horaFinCadena | time}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Cliente</span>
+                            <span>
+                                <span>{{row.cliente}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center actions-column">
+                        <p-radioButton [value]="row" [formControl]="seleccionado"
+                            *ngIf="!row.idReserva"></p-radioButton>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td [attr.colspan]="6" class="text-center">
+                        <div class="container">
+                            <br>
+                            <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                            No se encontraron horarios.<br><br>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button pButton pRipple label="Agregar reserva" icon="pi pi-check" class="mr-2 mt-3" (click)="save()"></button>
+        </div>
+    </div>
+</p-card>

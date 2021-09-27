@@ -9,6 +9,23 @@ export class MensajesService {
         private confirmationService: ConfirmationService
     ) { }
 
+    preguntarSiNo(header: string, message: string): Promise<boolean> {
+        return new Promise<boolean>(resolve => {
+            this.confirmationService.confirm({
+                header,
+                message,
+                accept: () => { resolve(true); },
+                reject: () => { resolve(false); },
+                rejectButtonStyleClass: 'p-button-text p-button-danger',
+                acceptButtonStyleClass: 'p-button-text',
+                rejectLabel: 'No',
+                acceptLabel: 'Si',
+                closeOnEscape: true,
+                dismissableMask: true
+            });
+        });
+    }
+
     descartarCambios(): Promise<boolean> {
         return new Promise<boolean>(resolve => {
             this.confirmationService.confirm({

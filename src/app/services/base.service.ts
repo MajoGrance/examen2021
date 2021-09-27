@@ -157,9 +157,10 @@ export class BaseService {
             const url = this.url;
             const options: any = {
                 headers: this.headers,
+                params:{like: 'S', ejemplo: JSON.stringify({})}
             }
-            if (filter) {
-                options.params = {ejemplo: JSON.stringify(filter?filter:{})};
+            if (JSON.stringify(filter) !== '{}') {
+                options.params = {like: 'S', ejemplo: JSON.stringify(filter?filter:{})};
             }
             const resp : any= await this.http.get<any>(url, options).toPromise();
             const ret: ServiceResponse = {

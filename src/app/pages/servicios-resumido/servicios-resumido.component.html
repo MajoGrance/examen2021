@@ -1,0 +1,137 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">list</i> Servicios resumido
+    </div>
+    <p-fieldset legend="Filtros" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-date-input [control]="filters.controls.fecha_desde" label="Desde Fecha"></app-date-input>
+            </div>
+            <div class="col-lg-4">
+                <app-date-input [control]="filters.controls.fecha_hasta" label="Hasta Fecha"></app-date-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="filters.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-4">
+                <app-reference-input [control]="filters.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente"
+                    idField="idPersona"></app-reference-input>
+            </div>
+        </div>
+        <button pButton pRipple label="Consultar" icon="pi pi-search" class="mr-2 mt-3" (click)="getSource()"></button>
+        <button *ngIf="source.length" #exportButton pButton icon="pi pi-download" label="Exportar" class="p-button" (click)="menu.toggle($event)"></button>
+        <p-menu #menu [popup]="true" [model]="exportarItems" appendTo="body"></p-menu>
+    </p-fieldset>
+    <p-table #dt [value]="source" [responsive]="true" sortMode="multiple"
+        styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+        [showCurrentPageReport]="true" [autoLayout]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="fechaHoraCadena">
+                    <span>Fecha</span>
+                    <p-sortIcon field="fechaHoraCadena" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nombreProfesional">
+                    <span>Nombre Profesional</span>
+                    <p-sortIcon field="nombreProfesional" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="apellidoProfesional">
+                    <span>Apellido Profesional</span>
+                    <p-sortIcon field="apellidoProfesional" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nombrePaciente">
+                    <span>Nombre Paciente</span>
+                    <p-sortIcon field="nombrePaciente" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="apellidoPaciente">
+                    <span>Apellido Paciente</span>
+                    <p-sortIcon field="apellidoPaciente" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="presupuesto">
+                    <span>Presupuesto</span>
+                    <p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+                <th pSortableColumn="subcategoria">
+                    <span>Subcategoría</span>
+                    <p-sortIcon field="subcategoria" pTooltip="CTRL + CLICK"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+            <tr class="animate__animated animate__fadeIn animate__faster">
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Fecha</span>
+                        <span>
+                            <span>{{ row.fechaHora }}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Nombre Profesional</span>
+                        <span>
+                            <span>{{ row.nombreProfesional }}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Apellido Profesional</span>
+                        <span>
+                            <span>{{ row.apellidoProfesional }}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Nombre Paciente</span>
+                        <span>
+                            <span>{{ row.nombrePaciente }}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Apellido Paciente</span>
+                        <span>
+                            <span>{{ row.apellidoPaciente }}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Presupuesto</span>
+                        <span>
+                            <span>{{ row.presupuesto | number:'':'es-AR' }}</span>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <span class="d-flex justify-content-between w-100">
+                        <span class="p-column-title">Subcategoría</span>
+                        <span>
+                            <span>{{ row.subcategoria }}</span>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="animate__animated animate__fadeIn animate__faster">
+                <td [attr.colspan]="7" class="text-center">
+                    <div class="container">
+                        <br>
+                        <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                        No se encontraron datos.<br><br>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

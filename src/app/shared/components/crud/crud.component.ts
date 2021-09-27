@@ -37,6 +37,7 @@ export class CRUDComponent implements OnInit, AfterViewInit {
      * Servicio a utilizarse para la consulta de datos
      */
     @Input() service!: any;
+    @Input() filtersValid!: boolean;
     /**
      * Url base del registro, utilizado para redireccionar a la ventana de nuevo registro o
      * editar registro.
@@ -51,6 +52,7 @@ export class CRUDComponent implements OnInit, AfterViewInit {
      * Clase del registro correspondiente a la lista.
      */
     @Input() model!: Type<any>;
+    @Input() filtros!: any;
     /**
      * Filas seleccionadas por el usuario.
      */
@@ -184,7 +186,12 @@ export class CRUDComponent implements OnInit, AfterViewInit {
      */
     async getData(): Promise<void> {
         this.loadingService.setLoading(true);
-        const resp = await this.service.getAll();
+        if (this.filtros && !this.filtersValid) {
+            this.source = [];
+            this.loadingService.setLoading(false);
+            return;
+        }
+        const resp = await this.service.getAll(this.filtros);
         if (resp.ok) {
             this.source = resp.resp;
         } else {

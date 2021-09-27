@@ -1,0 +1,69 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">add_task</i> Agregar Ficha Clínica
+    </div>
+    <p-fieldset legend="Ficha" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado" (paste)="pasteEmpleado($event)"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.empleado_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente" (paste)="pasteCliente($event)"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.cliente_nombre" label="" placeholder="" [readonly]="true">
+                </app-text-input>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.categoria" label="Categoría" placeholder=""
+                    [clase]="categoriaModel" [service]="categoriaService" name="Categoría"
+                    idField="idCategoria" (paste)="pasteCategoria($event)"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.categoria_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.subcategoria" label="Sub categoría" placeholder=""
+                    [clase]="tipoProductoModel" [service]="tipoProductoService" name="Sub categoría"
+                    idField="idTipoProducto" (paste)="pasteTipoProducto($event)"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.subcategoria_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <app-text-area-input [control]="ficha.controls.motivoConsulta" label="Motivo" placeholder=""></app-text-area-input>
+            </div>
+            <div class="col-lg-6">
+                <app-text-area-input [control]="ficha.controls.diagnostico" label="Diagnóstico" placeholder=""></app-text-area-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <app-text-area-input [control]="ficha.controls.observacion" label="Observación" placeholder=""></app-text-area-input>
+            </div>
+        </div>
+    </p-fieldset>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button pButton pRipple label="Agregar ficha" icon="pi pi-check" class="mr-2 mt-3" (click)="save()"></button>
+        </div>
+    </div>
+</p-card>

@@ -1,0 +1,19 @@
+<p-dialog header="Reserva" [visible]="display" (visibleChange)="setDisplay($event)" [modal]="true" [style]="{width: '40rem', 'overflow-y': 'auto'}"
+    [draggable]="false" [resizable]="false" class="modal-detalle" [focusTrap]="true">
+    <div class="row">
+        <div class="col-lg-4">
+            <app-text-input [control]="reserva.controls.idReserva" label="Reserva"
+                [readonly]="true"></app-text-input>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <app-text-area-input [control]="reserva.controls.observacion" label="Observación" placeholder=""></app-text-area-input>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button pButton pRipple label="Editar reserva" icon="pi pi-check" class="mr-2 mt-3" (click)="save()"></button>
+        </div>
+    </div>
+</p-dialog>

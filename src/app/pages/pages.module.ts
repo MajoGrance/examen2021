@@ -16,6 +16,17 @@ import { HorarioAgendaVentanaComponent } from './horario-agenda/horario-agenda-v
 import { HorarioAgendaListaComponent } from './horario-agenda/horario-agenda-lista/horario-agenda-lista.component';
 import { HorariosExcepcionListaComponent } from './horarios-excepcion/horarios-excepcion-lista/horarios-excepcion-lista.component';
 import { HorariosExcepcionVentanaComponent } from './horarios-excepcion/horarios-excepcion-ventana/horarios-excepcion-ventana.component';
+import { ReservasComponent } from './reservas/reservas.component';
+import { ReservarComponent } from './reservar/reservar.component';
+import { EditarComponent } from './reservas/editar-observacion/editar-observacion.component';
+import { FichasClinicasListaComponent } from './fichas-clinicas-lista/fichas-clinicas-lista.component';
+import { FichasClinicasAgregarComponent } from './fichas-clinicas-agregar/fichas-clinicas-agregar.component';
+import { ServiciosListaComponent } from './servicios-lista/servicios-lista.component';
+import { ServiciosAgregarComponent } from './servicios-agregar/servicios-agregar.component';
+import { FichasClinicasEditarComponent } from './fichas-clinicas-editar/fichas-clinicas-editar.component';
+import { ServicioEditarComponent } from './servicio-editar/servicio-editar.component';
+import { ServiciosResumidoComponent } from './servicios-resumido/servicios-resumido.component';
+import { ServiciosDetalladoComponent } from './servicios-detallado/servicios-detallado.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +44,17 @@ import { HorariosExcepcionVentanaComponent } from './horarios-excepcion/horarios
         HorarioAgendaListaComponent,
         HorariosExcepcionListaComponent,
         HorariosExcepcionVentanaComponent,
+        ReservasComponent,
+        ReservarComponent,
+        EditarComponent,
+        FichasClinicasListaComponent,
+        FichasClinicasAgregarComponent,
+        ServiciosListaComponent,
+        ServiciosAgregarComponent,
+        FichasClinicasEditarComponent,
+        ServicioEditarComponent,
+        ServiciosResumidoComponent,
+        ServiciosDetalladoComponent,
     ],
     imports: [
         CommonModule,

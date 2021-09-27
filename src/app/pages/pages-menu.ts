@@ -19,7 +19,7 @@ export class MenuItems {
         },
         {
             icon: 'inventory',
-            label: 'Presentación de Productos',
+            label: 'Tipos de Servicios',
             link: '/sitio/presentacion-productos',
         },
         {
@@ -39,23 +39,63 @@ export class MenuItems {
         },
         {
             icon: 'event_available',
-            label: 'Reservar turno',
-            link: '/sitio/reservar-turno',
+            label: 'Reservas',
+            link: '/sitio/reservas',
+            expanded: true,
+            children: [
+                {
+                    icon: 'list',
+                    label: 'Lista de reservas',
+                    link: '/sitio/reservas/lista',
+                },
+                {
+                    icon: 'add_task',
+                    label: 'Agregar reservas',
+                    link: '/sitio/reservas/agregar',
+                },
+            ]
         },
         {
             icon: 'folder_shared',
             label: 'Fichas clínicas',
-            link: '/sitio/reservar-turno',
+            link: '/sitio/fichas',
+            expanded: true,
+            children: [
+                {
+                    icon: 'list',
+                    label: 'Lista de Fichas',
+                    link: '/sitio/fichas/lista',
+                },
+                {
+                    icon: 'playlist_add',
+                    label: 'Agregar Ficha',
+                    link: '/sitio/fichas/agregar',
+                },
+            ]
         },
         {
             icon: 'manage_accounts',
             label: 'Servicios',
             link: '/sitio/servicios',
+            expanded: true,
+            children: [
+                {
+                    icon: 'list',
+                    label: 'Lista de Servicios',
+                    link: '/sitio/servicios/lista',
+                },
+                {
+                    icon: 'playlist_add',
+                    label: 'Agregar Servicio',
+                    link: '/sitio/servicios/agregar',
+                },
+            ],
         },
         {
             icon: 'list_alt',
             label: 'Reportes',
             link: '/sitio/reportes',
+            expanded: true,
             children: [
                 {
                     icon: 'security',

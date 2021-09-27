@@ -6,20 +6,22 @@ import { ServiceResponse } from '../shared/interfaces';
 const fb = new FormBuilder();
 
 export interface IHorarioExcepcion {
+    idHorarioExcepcion:  number,
     fechaCadena:         string,
     horaAperturaCadena:  string,
     horaCierreCadena:    string,
     flagEsHabilitar:     boolean,
-    idEmpleado:          IUsuario,
+    idEmpleado:          any,
     intervaloMinutos:    number,
 }
 
 export class HorarioExcepcionModel extends RecordModel implements IHorarioExcepcion {
+    idHorarioExcepcion!: number;
     fechaCadena!:        string;
     horaAperturaCadena!: string;
     horaCierreCadena!:   string;
     flagEsHabilitar!:    boolean;
-    idEmpleado!:         IUsuario;
+    idEmpleado!:         any;
     intervaloMinutos!:   number;
 
     constructor() {
@@ -28,6 +30,10 @@ export class HorarioExcepcionModel extends RecordModel implements IHorarioExcepc
 
     serialize(): IHorarioExcepcion {
         return super.serialize();
+    }
+
+    getId(): number {
+        return this.idHorarioExcepcion;
     }
 
     getFormGroup(): FormGroup {
@@ -59,6 +65,7 @@ export class HorarioExcepcionModel extends RecordModel implements IHorarioExcepc
             obj.horaAperturaCadena = obj.horaAperturaCadena.replace(':', '');
             obj.horaCierreCadena = obj.horaCierreCadena.replace(':', '');
             obj.horaCierreCadena = obj.horaCierreCadena.replace(/\//g, '');
+            obj.idEmpleado = {idPersona: obj.idEmpleado?.idPersona}
             if (!this.getId()) {
                 method = service.post(obj);
             } else {

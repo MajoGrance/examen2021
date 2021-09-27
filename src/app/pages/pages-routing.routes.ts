@@ -16,6 +16,16 @@ import { HorarioAgendaListaComponent } from './horario-agenda/horario-agenda-lis
 import { HorarioAgendaVentanaComponent } from './horario-agenda/horario-agenda-ventana/horario-agenda-ventana.component';
 import { HorariosExcepcionListaComponent } from './horarios-excepcion/horarios-excepcion-lista/horarios-excepcion-lista.component';
 import { HorariosExcepcionVentanaComponent } from './horarios-excepcion/horarios-excepcion-ventana/horarios-excepcion-ventana.component';
+import { ReservasComponent } from './reservas/reservas.component';
+import { ReservarComponent } from './reservar/reservar.component';
+import { FichasClinicasListaComponent } from './fichas-clinicas-lista/fichas-clinicas-lista.component';
+import { FichasClinicasAgregarComponent } from './fichas-clinicas-agregar/fichas-clinicas-agregar.component';
+import { ServiciosListaComponent } from './servicios-lista/servicios-lista.component';
+import { ServiciosAgregarComponent } from './servicios-agregar/servicios-agregar.component';
+import { FichasClinicasEditarComponent } from './fichas-clinicas-editar/fichas-clinicas-editar.component';
+import { ServicioEditarComponent } from './servicio-editar/servicio-editar.component';
+import { ServiciosResumidoComponent } from './servicios-resumido/servicios-resumido.component';
+import { ServiciosDetalladoComponent } from './servicios-detallado/servicios-detallado.component';
 
 const routes: Routes = [
     {
@@ -36,6 +46,16 @@ const routes: Routes = [
             { path: 'horario-agenda/:id', component: HorarioAgendaVentanaComponent, canDeactivate: [WindowGuard]},
             { path: 'horario-excepcion', component: HorariosExcepcionListaComponent },
             { path: 'horario-excepcion/:id', component: HorariosExcepcionVentanaComponent, canDeactivate: [WindowGuard]},
+            { path: 'reservas/lista', component: ReservasComponent },
+            { path: 'reservas/agregar', component: ReservarComponent },
+            { path: 'fichas/lista', component: FichasClinicasListaComponent },
+            { path: 'fichas/agregar', component: FichasClinicasAgregarComponent },
+            { path: 'fichas/:id', component: FichasClinicasEditarComponent },
+            { path: 'servicios/lista', component: ServiciosListaComponent },
+            { path: 'servicios/agregar', component: ServiciosAgregarComponent },
+            { path: 'servicios/:id', component: ServicioEditarComponent },
+            { path: 'reportes/servicios-resumido', component: ServiciosResumidoComponent },
+            { path: 'reportes/servicios-detallado', component: ServiciosDetalladoComponent },
             {
                 path: '**',
                 redirectTo: 'dashboard',

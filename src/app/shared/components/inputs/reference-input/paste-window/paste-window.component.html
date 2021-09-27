@@ -1,5 +1,5 @@
 <p-dialog [header]="'Seleccionar ' + name" [visible]="display" (visibleChange)="setDisplay($event)" [modal]="true"
-    [style]="{width: responsiveWidth}"
+    [style]="{width: responsiveWidth}"  appendTo="body"
     [draggable]="false" [resizable]="false" class="paste-dialog" [autoZIndex]="true">
     <div class="pt-2 pr-2 pl-2 pb-2">
         <span class="p-input-icon-left w-100" [class.p-input-icon-right]="searchInput.value">

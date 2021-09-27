@@ -11,7 +11,7 @@ export interface IHorarioAgenda {
     horaAperturaCadena:      string,
     horaCierreCadena:        string,
     intervaloMinutos:        string,
-    idEmpleado:              IUsuario,
+    idEmpleado:              any,
 }
 
 export class HorarioAgendaModel extends RecordModel implements IHorarioAgenda{
@@ -20,7 +20,7 @@ export class HorarioAgendaModel extends RecordModel implements IHorarioAgenda{
     horaAperturaCadena!:     string;
     horaCierreCadena!:       string;
     intervaloMinutos!:       string;
-    idEmpleado!:             IUsuario;
+    idEmpleado!:             any;
 
     constructor() {
         super();
@@ -28,6 +28,10 @@ export class HorarioAgendaModel extends RecordModel implements IHorarioAgenda{
 
     serialize(): IHorarioAgenda {
         return super.serialize();
+    }
+
+    getId(): number {
+        return this.idPersonaHorarioAgenda;
     }
 
     getFormGroup(): FormGroup {
@@ -57,6 +61,7 @@ export class HorarioAgendaModel extends RecordModel implements IHorarioAgenda{
             const obj = this.serialize();
             obj.horaAperturaCadena = obj.horaAperturaCadena.replace(':', '');
             obj.horaCierreCadena = obj.horaCierreCadena.replace(':', '');
+            obj.idEmpleado = {idPersona: obj.idEmpleado?.idPersona}
             if (!this.getId()) {
                 method = service.post(obj);
             } else {

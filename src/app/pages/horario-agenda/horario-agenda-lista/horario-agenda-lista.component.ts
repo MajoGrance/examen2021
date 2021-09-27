@@ -1,7 +1,12 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { ListaInterface, TableColumn } from '../../../shared/interfaces';
 import { HorarioAgendaModel } from '../../../models/horario-agenda.model';
 import { HorarioAgendaService } from '../../../services/abm/horario-agenda.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { CRUDComponent } from '../../../shared/components/crud/crud.component';
+import { UsuarioModel } from '../../../models/usuario.model';
+import { OptionsInterface } from '../../../shared/components/inputs/select-input/select-input.component';
+import { UsuariosService } from '../../../services/abm/usuario.service';
 
 @Component({
     selector: 'app-horario-agenda-lista',
@@ -9,6 +14,7 @@ import { HorarioAgendaService } from '../../../services/abm/horario-agenda.servi
     styleUrls: ['./horario-agenda-lista.component.scss']
 })
 export class HorarioAgendaListaComponent implements OnInit, ListaInterface {
+    @ViewChild('crud', {static: false}) crud!: CRUDComponent;
     /**
      * Nombre del registro.
      */
@@ -39,11 +45,45 @@ export class HorarioAgendaListaComponent implements OnInit, ListaInterface {
      * Clase del modelo correspondiente al registro.
      */
     model: Type<any> = HorarioAgendaModel;
+    empleadoModel: Type<any> = UsuarioModel;
+    filtrosForm: FormGroup = this.fb.group({
+        empleado: [''],
+        dia: ['']
+    });
+    dias: OptionsInterface[] = [
+        {valor: '', nombre: 'No Filtrar'},
+        {valor: 0, nombre: 'Domingo'},
+        {valor: 1, nombre: 'Lunes'},
+        {valor: 2, nombre: 'Martes'},
+        {valor: 3, nombre: 'Miércoles'},
+        {valor: 4, nombre: 'Jueves'},
+        {valor: 5, nombre: 'Viernes'},
+        {valor: 6, nombre: 'Sábado'},
+    ];
+
+    get filtros(): any {
+        const obj = this.filtrosForm.value;
+        const ret: any = {};
+        if (obj.empleado) {
+            ret.idEmpleado = {idPersona: obj.empleado};
+        }
+        if (obj.dia !== '') {
+            ret.dia = obj.dia;
+        }
+        return ret;
+    }
     
     constructor(
-        public service: HorarioAgendaService
+        public service: HorarioAgendaService,
+        public empleadoService: UsuariosService,
+        private fb: FormBuilder
     ) { }
     
     ngOnInit(): void { }
+
+    getSource(): void {
+        this.filtrosForm.markAllAsTouched();
+        this.crud.getData();
+    }
  
 }

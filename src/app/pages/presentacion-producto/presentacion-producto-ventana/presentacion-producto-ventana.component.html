@@ -1,6 +1,6 @@
 <app-window [title]="title" [url]="url" [(editando)]="editando" [(nuevo)]="nuevo" [(form)]="formGroup" 
     [(object)]="object" [(modificado)]="modificado" [model]="model" [name]="name" [service]="service"
-    [titleField]="titleField">
+    [titleField]="titleField" [existencia]="existencia">
     <form [formGroup]="formGroup">
         <p-tabView>
             <p-tabPanel header="General">
@@ -12,6 +12,12 @@
                     <div class="col-lg-9">
                         <app-text-input [control]="formGroup.controls.nombre" label="Nombre" [readonly]="!editando" placeholder="">
                         </app-text-input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <app-number-input [control]="precio" label="Precio" placeholder=""
+                        [readonly]="!editando" (changeValue)="setExistencia()"></app-number-input>
                     </div>
                 </div>
                 <div class="row">

@@ -9,7 +9,7 @@
     background-color: var(--primary-color);
     color: white;
     height: 4rem;
-    z-index: 6;
+    z-index: 0;
 }
 .sidebar-toggle:hover, .brand-text:hover {
     cursor: pointer;
@@ -38,7 +38,7 @@
     left: 0;
     height: calc(100vh - 4rem);
     transition: .2s width ease-in;
-    z-index: 5;
+    z-index: 1;
     background-image: linear-gradient(
         rgba(0, 0, 0, 0.26), 
         rgba(0, 0, 0, 0.671)
@@ -124,6 +124,7 @@
     right: 0;
     bottom: 0;
     overflow: auto;
+    z-index: 0;
     transition: .2s left ease-in;
     background-color: var(--surface-100);
 }

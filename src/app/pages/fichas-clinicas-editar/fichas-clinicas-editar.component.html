@@ -1,0 +1,133 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">add_task</i> Editar Ficha Clínica
+    </div>
+    <p-fieldset legend="Ficha" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-text-input [control]="ficha.controls.idFichaClinica" label="ID" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+            <div class="col-lg-6">
+                <app-date-input [control]="ficha.controls.fechaHoraCadena" label="Fecha" placeholder=""
+                    [readonly]="true"></app-date-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado" (paste)="pasteEmpleado($event)"
+                    idField="idPersona" [readonly]="true"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.empleado_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente" (paste)="pasteCliente($event)"
+                    idField="idPersona" [readonly]="true"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.cliente_nombre" label="" placeholder="" [readonly]="true">
+                </app-text-input>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.categoria" label="Categoría" placeholder=""
+                    [clase]="categoriaModel" [service]="categoriaService" name="Categoría"
+                    idField="idCategoria" (paste)="pasteCategoria($event)"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.categoria_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="ficha.controls.subcategoria" label="Sub categoría" placeholder=""
+                    [clase]="tipoProductoModel" [service]="tipoProductoService" name="Sub categoría"
+                    idField="idTipoProducto" (paste)="pasteTipoProducto($event)" [readonly]="true"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="ficha.controls.subcategoria_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <app-text-area-input [control]="ficha.controls.motivoConsulta" label="Motivo" placeholder="" [readonly]="true"></app-text-area-input>
+            </div>
+            <div class="col-lg-6">
+                <app-text-area-input [control]="ficha.controls.diagnostico" label="Diagnóstico" placeholder="" [readonly]="true"></app-text-area-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <app-text-area-input [control]="ficha.controls.observacion" label="Observación" placeholder=""></app-text-area-input>
+            </div>
+        </div>
+    </p-fieldset>
+    <p-fieldset legend="Servicios" styleClass="mt-6">
+        <p-table #dt [value]="source" [rows]="10" [paginator]="true"
+            [responsive]="true" sortMode="multiple" filterMode="menu"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+            [showCurrentPageReport]="true" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="fechaHoraCadena">
+                        Fecha<p-sortIcon field="fechaHoraCadena" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="presupuesto">
+                        Presupuesto<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th class="actions-column text-center">Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Fecha</span>
+                            <span>
+                                <span>{{row.fechaHoraCadena | stringDate | date: 'd/M/yyyy'}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Presupuesto</span>
+                            <span>
+                                <span>{{row.presupuesto | number: '' : 'es-AR'}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center actions-column">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                            (click)="navigateTo(row)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td [attr.colspan]="6" class="text-center">
+                        <div class="container">
+                            <br>
+                            <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                            No se encontraron servicios.<br><br>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button pButton pRipple label="Editar ficha" icon="pi pi-check" class="mr-2 mt-3" (click)="save()"></button>
+        </div>
+    </div>
+</p-card>

@@ -1,0 +1,223 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">add_task</i> Agregar Servicio
+    </div>
+    <p-fieldset legend="Servicio" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-date-input [control]="fecha" label="Fecha Ficha" placeholder="" (changeValue)="getFichas()"></app-date-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="servicio.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado" (paste)="pasteEmpleado($event)"
+                    idField="idPersona" ></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="servicio.controls.empleado_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="servicio.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente" (paste)="pasteCliente($event)"
+                    idField="idPersona"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="servicio.controls.cliente_nombre" label="" placeholder="" [readonly]="true">
+                </app-text-input>
+            </div>
+        </div>
+    </p-fieldset>
+    <p-fieldset legend="Ficha" styleClass="mt-6">
+        <span class="danger-text" *ngIf="!seleccionado.value">Debe seleccionar una ficha</span>
+        <p-table #dt [value]="fichas" [rows]="10" [paginator]="true"
+            [responsive]="true" sortMode="multiple" filterMode="menu"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+            [showCurrentPageReport]="true" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="idFichaClinica">
+                        ID Ficha<p-sortIcon field="idFichaClinica" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fechaHoraCadena">
+                        Fecha<p-sortIcon field="fechaHoraCadena" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="categoria">
+                        Categoría<p-sortIcon field="categoria" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th pSortableColumn="subcategoria">
+                        Sub categoría<p-sortIcon field="subcategoria" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th class="actions-column text-center">Seleccionar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">ID Ficha</span>
+                            <span>
+                                <span>{{row.idFichaClinica}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Fecha</span>
+                            <span>
+                                <span>{{row.fechaHoraCadena | stringDate | date: 'd/M/yyyy'}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Categoría</span>
+                            <span>
+                                <span>{{row.categoria}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Subcategoría</span>
+                            <span>
+                                <span>{{row.subcategoria}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center actions-column">
+                        <p-radioButton [value]="row" [formControl]="seleccionado"
+                            *ngIf="!row.idReserva"></p-radioButton>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td [attr.colspan]="6" class="text-center">
+                        <div class="container">
+                            <br>
+                            <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                            No se encontraron fichas.<br><br>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+    <p-fieldset legend="Detalle" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-6">
+                <app-reference-input [control]="detalle.controls.categoria" label="Categoría" placeholder=""
+                    [clase]="categoriaModel" [service]="categoriaService" name="Categoría"
+                    (paste)="pasteCategoria($event)"
+                    idField="idCategoria"></app-reference-input>
+            </div>
+            <div class="col-lg-6">
+                <app-reference-input [control]="detalle.controls.subcategoria" label="Sub categoría" placeholder=""
+                    [clase]="TipoProductoModel" [service]="tipoProductoService" name="Sub categoría"
+                    idField="idTipoProducto" [filtros]="filtroSubCategoria" (paste)="pasteSubCategoria($event)"
+                    [readonly]="!detalle.controls.categoria.value" 
+                    [filtersValid]=filtroSubCategoria?.idCategoria?.idCategoria></app-reference-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <app-reference-input [control]="detalle.controls.tipo_servicio" label="Tipo de Servicio" placeholder=""
+                    [clase]="presentacionModel" [service]="presentacionProductoService" name="Tipo de Servicio"
+                    idField="idPresentacionProducto" [filtros]="filtrosPresentacionProducto" 
+                    [readonly]="!detalle.controls.subcategoria.value"
+                    (paste)="pastePresentacionProducto($event)"
+                    [filtersValid]="detalle.controls.subcategoria.valid"></app-reference-input>
+            </div>
+            <div class="col-lg-6">
+                <app-number-input [control]="detalle.controls.precio" label="Precio" placeholder=""
+                    [readonly]="true"></app-number-input>
+            </div>
+            <div class="col-lg-6">
+                <app-number-input [control]="detalle.controls.cantidad" label="Cantidad" placeholder=""
+                    ></app-number-input>
+            </div>
+        </div>
+        <button pButton pRipple label="Agregar detalle" icon="pi pi-plus" class="p-button-success mb-2" (click)="agregarDetalle()"></button>
+
+        <p-table #dt [value]="source" [rows]="10" [paginator]="true"
+            [responsive]="true" sortMode="multiple" filterMode="menu"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+            [showCurrentPageReport]="true" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="presentacion">
+                        Tipo de Servicio<p-sortIcon field="presentacion" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="presupuesto">
+                        Precio Unitario<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th pSortableColumn="presupuesto">
+                        Cantidad<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th pSortableColumn="presupuesto">
+                        Total<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th class="actions-column text-center">Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row let-idx="index">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Tipo de Servicio</span>
+                            <span>
+                                <span>{{row.idPresentacionProducto?.idPresentacionProducto}} - {{row.idPresentacionProducto?.nombre}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Precio Unitario</span>
+                            <span>
+                                <span> {{row.precioUnitario | number: '': 'es-AR'}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Cantidad</span>
+                            <span>
+                                <span> {{row.cantidad | number: '': 'es-AR'}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Total</span>
+                            <span>
+                                <span> {{row.total | number: '': 'es-AR'}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center actions-column">
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2"
+                            (click)="deleteDetalle(idx)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td [attr.colspan]="6" class="text-center">
+                        <div class="container">
+                            <br>
+                            <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                            No se encontraron servicios.<br><br>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button pButton pRipple label="Agregar servicio" icon="pi pi-save" class="mr-2 mt-3" (click)="save()"></button>
+        </div>
+    </div>
+</p-card>

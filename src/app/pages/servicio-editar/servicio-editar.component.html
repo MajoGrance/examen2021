@@ -1,0 +1,159 @@
+<p-card styleClass="mt-4">
+    <div class="card-title shadow-5 d-flex align-items-center">
+        <i class="material-icons-outlined pr-2 mod-icon">add_task</i> Editar Servicio
+    </div>
+    <p-fieldset legend="Servicio" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="servicio.controls.empleado" label="Empleado" placeholder=""
+                    [clase]="empleadoModel" [service]="empleadoService" name="Empleado" (paste)="pasteEmpleado($event)"
+                    idField="idPersona" [readonly]="true"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="servicio.controls.empleado_nombre" label="" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <app-reference-input [control]="servicio.controls.cliente" label="Cliente" placeholder=""
+                    [clase]="clienteModel" [service]="clienteService" name="Cliente" (paste)="pasteCliente($event)"
+                    idField="idPersona" [readonly]="true"></app-reference-input>
+            </div>
+            <div class="col-lg-8">
+                <app-text-input [control]="servicio.controls.cliente_nombre" label="" placeholder="" [readonly]="true">
+                </app-text-input>
+            </div>
+        </div>
+    </p-fieldset>
+    <p-fieldset legend="Ficha" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-4">
+                <app-text-input [control]="servicio.controls.ficha_clinica" label="ID" placeholder=""
+                    [readonly]="true"></app-text-input>
+            </div>
+        </div>
+    </p-fieldset>
+    <p-fieldset legend="Detalle" styleClass="mt-6">
+        <div class="row">
+            <div class="col-lg-6">
+                <app-reference-input [control]="detalle.controls.categoria" label="Categoría" placeholder=""
+                    [clase]="categoriaModel" [service]="categoriaService" name="Categoría"
+                    (paste)="pasteCategoria($event)"
+                    idField="idCategoria"></app-reference-input>
+            </div>
+            <div class="col-lg-6">
+                <app-reference-input [control]="detalle.controls.subcategoria" label="Sub categoría" placeholder=""
+                    [clase]="TipoProductoModel" [service]="tipoProductoService" name="Sub categoría"
+                    idField="idTipoProducto" [filtros]="filtroSubCategoria"
+                    (paste)="pasteSubCategoria($event)"
+                    [readonly]="!detalle.controls.categoria.value"
+                    [filtersValid]=filtroSubCategoria?.idCategoria?.idCategoria></app-reference-input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <app-reference-input [control]="detalle.controls.tipo_servicio" label="Tipo de Servicio" placeholder=""
+                    [clase]="presentacionModel" [service]="presentacionProductoService" name="Tipo de Servicio"
+                    idField="idPresentacionProducto" [filtros]="filtrosPresentacionProducto"
+                    (paste)="pastePresentacionProducto($event)"
+                    [readonly]="!detalle.controls.subcategoria.value"
+                    [filtersValid]="detalle.controls.subcategoria.valid">
+                </app-reference-input>
+            </div>
+            <div class="col-lg-6">
+                <app-number-input [control]="detalle.controls.precio" label="Precio" placeholder=""
+                    [readonly]="true"></app-number-input>
+            </div>
+            <div class="col-lg-6">
+                <app-number-input [control]="detalle.controls.cantidad" label="Cantidad" placeholder=""
+                    ></app-number-input>
+            </div>
+        </div>
+        <button pButton pRipple label="Agregar detalle" icon="pi pi-plus" class="p-button-success mb-2" (click)="agregarDetalle()"></button>
+        
+        <p-table #dt [value]="source" [rows]="10" [paginator]="true"
+            [responsive]="true" sortMode="multiple" filterMode="menu"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-sm p-datatable-responsive p-datatable-gridlines p-datatable-striped"
+            [showCurrentPageReport]="true" [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="idDetalle">
+                        ID detalle<p-sortIcon field="idDetalle" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="presentacion">
+                        Tipo de Servicio<p-sortIcon field="presentacion" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="presupuesto">
+                        Precio Unitario<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th pSortableColumn="presupuesto">
+                        Cantidad<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    <th pSortableColumn="presupuesto">
+                        Total<p-sortIcon field="presupuesto" pTooltip="CTRL + CLICK"></p-sortIcon>
+                    </th>
+                    <th class="actions-column text-center">Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">ID detalle</span>
+                            <span>
+                                <span>{{row.idServicioDetalle}}</span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Tipo de Servicio</span>
+                            <span>
+                                <span>{{row.idPresentacionProducto?.idPresentacionProducto}} - {{row.idPresentacionProducto?.nombre}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Precio Unitario</span>
+                            <span>
+                                <span> {{row.precioUnitario | number: '': 'es-AR'}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Cantidad</span>
+                            <span>
+                                <span> {{row.cantidad | number: '': 'es-AR'}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="d-flex justify-content-between w-100">
+                            <span class="p-column-title">Total</span>
+                            <span>
+                                <span> {{row.total | number: '': 'es-AR'}} </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center actions-column">
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2"
+                            (click)="deleteDetalle(row)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="animate__animated animate__fadeIn animate__faster">
+                    <td [attr.colspan]="6" class="text-center">
+                        <div class="container">
+                            <br>
+                            <img class="no-data-img mt-3 mb-3" src="./assets/images/no-data.svg"><br>
+                            No se encontraron detalles.<br><br>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+</p-card>

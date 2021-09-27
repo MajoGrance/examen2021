@@ -9,6 +9,10 @@ export interface IServicio {
     idServicio:             number,
     idFichaClinica:         IFichaClinica,
     observacion:            string,
+    profesional?:           string,
+    cliente?:               string
+    categoria?:             string
+    subcategoria?:          string
 }
 
 export interface IServicioDetalle {
@@ -42,7 +46,12 @@ export class ServicioModel extends RecordModel implements IServicio {
         return fb.group({
             idServicio: [this.idServicio],
             idFichaClinica: [this.idFichaClinica, Validators.required],
-            observacion: [this.observacion, Validators.required],
+            observacion: [this.observacion],
+            ficha_clinica: [this.idFichaClinica?.idFichaClinica],
+            cliente: [this.idFichaClinica?.idCliente?.idPersona, Validators.required],
+            cliente_nombre: [`${this.idFichaClinica?.idCliente?.nombre?this.idFichaClinica?.idCliente?.nombre:''} ${this.idFichaClinica?.idCliente?.apellido?this.idFichaClinica?.idCliente?.apellido:''}`],
+            empleado: [this.idFichaClinica?.idEmpleado?.idPersona, Validators.required],
+            empleado_nombre: [`${this.idFichaClinica?.idEmpleado?.nombre?this.idFichaClinica?.idEmpleado?.nombre:''} ${this.idFichaClinica?.idEmpleado?.apellido?this.idFichaClinica?.idEmpleado?.apellido:''}`],
         });
     }
 
